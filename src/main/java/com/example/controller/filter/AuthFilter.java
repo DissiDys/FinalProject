@@ -1,6 +1,6 @@
 package com.example.controller.filter;
 
-import com.example.model.DB.entity.User;
+import com.example.DB.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

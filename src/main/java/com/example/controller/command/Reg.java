@@ -1,10 +1,10 @@
 package com.example.controller.command;
 
-import com.example.model.RegistrationService;
+import com.example.controller.constants.Path;
+import com.example.controller.util.Validation;
+import com.example.service.RegistrationService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Reg implements Command{
     @Override

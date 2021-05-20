@@ -1,4 +1,4 @@
-package com.example.model.DB.entity;
+package com.example.DB.entity;
 
 
 import com.google.common.hash.Hashing;

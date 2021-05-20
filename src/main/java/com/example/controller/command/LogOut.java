@@ -1,5 +1,7 @@
 package com.example.controller.command;
 
+import com.example.controller.constants.Path;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class LogOut implements Command{

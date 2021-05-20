@@ -1,6 +1,7 @@
-package com.example.model.DB.Manage;
+package com.example.DB.manage;
 
-import com.example.model.DB.entity.User;
+import com.example.DB.entity.User;
+import com.example.controller.constants.SQLConstants;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class DBManager {
         List<User> users = new ArrayList<>();
         try (Connection con = getConnection(url);
              Statement stmt = con.createStatement();
-             ResultSet resultSet = stmt.executeQuery(Constants.FIND_ALL_USERS)
+             ResultSet resultSet = stmt.executeQuery(SQLConstants.FIND_ALL_USERS)
         ) {
             while (resultSet.next()) {
                 User userForList = new User(resultSet.getLong(2), resultSet.getLong(3));
@@ -47,7 +48,7 @@ public class DBManager {
         boolean res = false;
 
         try (Connection con = getConnection(url);
-             PreparedStatement pstmt = con.prepareStatement(Constants.ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = con.prepareStatement(SQLConstants.ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
 
             pstmt.setString(i++, String.valueOf(user.getHashedLogin()));

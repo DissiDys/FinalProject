@@ -1,7 +1,7 @@
-package com.example.model;
+package com.example.service;
 
-import com.example.model.DB.Manage.DBManager;
-import com.example.model.DB.entity.User;
+import com.example.DB.manage.DBManager;
+import com.example.DB.entity.User;
 
 public class RegistrationService {
     public static boolean regNewUser(String login, String password){

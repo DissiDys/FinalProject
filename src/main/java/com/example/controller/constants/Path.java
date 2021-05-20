@@ -1,4 +1,4 @@
-package com.example.controller.command;
+package com.example.controller.constants;
 
 public class Path {
     public static String LOGIN = "/view/jsp/login.jsp";

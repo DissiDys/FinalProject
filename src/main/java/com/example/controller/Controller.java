@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.controller.command.*;
-import com.example.model.DB.Manage.DBManager;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Servlet extends HttpServlet {
+public class Controller extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     public void init() {

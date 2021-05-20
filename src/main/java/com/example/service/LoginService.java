@@ -1,6 +1,6 @@
-package com.example.model;
-import com.example.model.DB.Manage.DBManager;
-import com.example.model.DB.entity.User;
+package com.example.service;
+import com.example.DB.manage.DBManager;
+import com.example.DB.entity.User;
 
 public class LoginService {
     public static boolean DBContainsUser(String name, String password){

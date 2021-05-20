@@ -1,7 +1,8 @@
 package com.example.controller.command;
 
-import com.example.model.DB.entity.User;
-import com.example.model.LoginService;
+import com.example.DB.entity.User;
+import com.example.controller.constants.Path;
+import com.example.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 
