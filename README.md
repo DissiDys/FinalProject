@@ -1,1 +1,1 @@
-Final project "Time-Tracking" at the course Java Web Development, EPAM
+Final project "Time-Tracking" at the course Java Web Development
