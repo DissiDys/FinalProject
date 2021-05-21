@@ -12,8 +12,8 @@ public class LogOut implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         logger.info("User with login " + request.getSession().getAttribute("userLogin") + " logged out");
-        CommandUtility.deleteUserFromLogged(request);
-        CommandUtility.deleteUserRole(request);
+        CommandUtility.deleteUserFromLogged(request.getSession());
+        CommandUtility.deleteUserRole(request.getSession());
         return Path.MAIN_PAGE;
     }
 }

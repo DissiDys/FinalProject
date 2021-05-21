@@ -6,17 +6,16 @@ import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
 public class CommandUtility {
-    static void setUserRole(HttpServletRequest request,
+    public static void setUserRole(HttpSession session,
                             User.ROLE role) {
-        HttpSession session = request.getSession();
         session.setAttribute("role", role);
     }
-    static void deleteUserRole(HttpServletRequest request){
-        request.getSession().removeAttribute("role");
+    public static void deleteUserRole(HttpSession session){
+        session.removeAttribute("role");
     }
 
-    static boolean checkUserIsLogged(HttpServletRequest request, String userLogin){
-        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext().getAttribute("loggedUsers");
+    public static boolean checkUserIsLogged(HttpSession session, String userLogin){
+        HashSet<String> loggedUsers = (HashSet<String>) session.getServletContext().getAttribute("loggedUsers");
         if (loggedUsers == null){
             loggedUsers = new HashSet<>();
         }
@@ -24,18 +23,18 @@ public class CommandUtility {
             return true;
         }
         loggedUsers.add(userLogin);
-        request.getSession().getServletContext()
+        session.getServletContext()
                 .setAttribute("loggedUsers", loggedUsers);
         return false;
     }
-    static void deleteUserFromLogged(HttpServletRequest request){
-        String userLogin = (String)request.getSession().getAttribute("userLogin");
-        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext().getAttribute("loggedUsers");
+    public static void deleteUserFromLogged(HttpSession session){
+        String userLogin = (String)session.getAttribute("userLogin");
+        HashSet<String> loggedUsers = (HashSet<String>) session.getServletContext().getAttribute("loggedUsers");
         if (loggedUsers == null){
             loggedUsers = new HashSet<>();
         }
         loggedUsers.removeIf(uL -> uL.equals(userLogin));
-        request.getSession().getServletContext()
+        session.getServletContext()
                 .setAttribute("loggedUsers", loggedUsers);
     }
 }

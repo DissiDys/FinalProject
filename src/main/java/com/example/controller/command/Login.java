@@ -20,20 +20,19 @@ public class Login implements Command {
             return Path.LOGIN;
         }
 
-
         if (LoginService.DBContainsUser(login, password)) {
-            if (CommandUtility.checkUserIsLogged(request, login)) {
+            if (CommandUtility.checkUserIsLogged(request.getSession(), login)) {
                 request.setAttribute("user_already_logged", true);
                 logger.error("User with login " + login + " already logged");
                 return Path.LOGIN;
             }
             request.getSession().setAttribute("userLogin", login);
             if (login.equals("Admin")) {
-                CommandUtility.setUserRole(request, User.ROLE.ADMIN);
+                CommandUtility.setUserRole(request.getSession(), User.ROLE.ADMIN);
                 logger.info("Success login, as Admin ( login: " + login + " )");
                 return "/view/jsp/role/adminAccount.jsp";
             } else {
-                CommandUtility.setUserRole(request, User.ROLE.USER);
+                CommandUtility.setUserRole(request.getSession(), User.ROLE.USER);
                 logger.info("Success login, as User ( login: " + login + " )");
                 return "/view/jsp/role/userAccount.jsp";
             }

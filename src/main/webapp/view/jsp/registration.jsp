@@ -13,8 +13,9 @@
     </c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><fmt:message key="registration" bundle="${bundle}"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/css/style.css">
+    <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
+    <title><fmt:message key="registration" bundle="${bundle}"/></title>
 </head>
 
 <body>
