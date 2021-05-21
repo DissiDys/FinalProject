@@ -5,7 +5,6 @@ com\example\DB\entity\User.class
 com\example\controller\command\Command.class
 com\example\controller\constants\SQLConstants.class
 com\example\controller\command\LogOut.class
-com\example\controller\command\OnMain.class
 com\example\controller\constants\Path.class
 com\example\controller\filter\AuthFilter.class
 com\example\DB\entity\User$ROLE.class

@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,11 +23,11 @@ public class AuthFilter implements Filter {
         Matcher m = Pattern.compile("(?<=role/)\\w*(?=/)").matcher(req.getRequestURI());
         String role = null;
         if (m.find()){
-            role = m.group();
+            role = m.group().toUpperCase(Locale.ROOT);
         }
         User.ROLE enumRole = (User.ROLE) req.getSession().getAttribute("role");
 
-        if (role != null && (enumRole == null || !role.equals(User.ROLE.getStringValue(enumRole)))) {
+        if (role != null && (enumRole == null || !role.equals(enumRole.toString()))) {
             logger.error("Access denied, log as a " + role);
             req.setAttribute("msg", "Access error, auth, as a " + role);
             req.getRequestDispatcher("/view/jsp/error.jsp").forward(req, resp);

@@ -30,6 +30,10 @@
         <url-pattern>/app/role/*</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>com.example.controller.listener.SessionListener</listener-class>
+    </listener>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
