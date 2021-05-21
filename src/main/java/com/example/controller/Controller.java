@@ -15,6 +15,7 @@ public class Controller extends HttpServlet {
         commands.put("logout", new LogOut());
         commands.put("login", new Login());
         commands.put("registration", new Reg());
+        commands.put("onMain", new OnMain());
     }
 
     @Override

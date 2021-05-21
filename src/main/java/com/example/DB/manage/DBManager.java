@@ -3,11 +3,16 @@ package com.example.DB.manage;
 import com.example.DB.entity.User;
 import com.example.controller.constants.SQLConstants;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
+    private final Logger logger = LogManager.getLogger(DBManager.class);
+
     private static DBManager dbManager;
     private final String url;
 
@@ -38,8 +43,8 @@ public class DBManager {
                 userForList.setId(resultSet.getLong(1));
                 users.add(userForList);
             }
-        } catch (SQLException throwables) {
-            System.out.println(throwables.getMessage());
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
         }
         return users;
     }
@@ -60,8 +65,8 @@ public class DBManager {
                 }
                 res = true;
             }
-        } catch (SQLException throwables) {
-            System.out.println(throwables.getMessage());
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
         }
 
         return res;
