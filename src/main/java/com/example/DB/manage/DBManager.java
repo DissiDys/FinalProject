@@ -17,7 +17,7 @@ public class DBManager {
     private final String url;
 
     private DBManager() {
-        url = "jdbc:mysql://localhost:3306/regform?allowPublicKeyRetrieval=true&sslMode=DISABLED&serverTimezone=UTC&user=root&password=Idalog71_7";
+        url = SQLConstants.URL;
     }
 
     public static DBManager getInstance() {

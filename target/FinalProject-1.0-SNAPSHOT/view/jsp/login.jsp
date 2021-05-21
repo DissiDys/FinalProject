@@ -18,15 +18,9 @@
 </head>
 <body>
 <div>
-    <a href="${pageContext.request.contextPath}/index.jsp" class="onMain"><fmt:message key="on_main"
-                                                                                       bundle="${bundle}"/></a>
+    <a href="${pageContext.request.contextPath}/app/onMain" class="onMain"><fmt:message key="on_main" bundle="${bundle}"/></a>
     <a href="${EnLang}" class="localizationEN">EN</a>
     <a href="${UkrLang}" class="localizationUA">UKR</a>
-</div>
-
-<div>
-    <a href="${pageContext.request.contextPath}/app/logout" class="onMain"><fmt:message key="on_main"
-                                                                                        bundle="${bundle}"/></a>
 </div>
 
 <form method="post" action="${pageContext.request.contextPath}/app/login">
