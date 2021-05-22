@@ -1,8 +1,8 @@
 package com.example.controller.command;
 
-import com.example.DB.entity.User;
+import com.example.model.entity.User;
 import com.example.controller.constants.Path;
-import com.example.service.LoginService;
+import com.example.model.service.LoginService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -20,13 +20,15 @@ public class Login implements Command {
             return Path.LOGIN;
         }
 
-        if (LoginService.DBContainsUser(login, password)) {
-            if (CommandUtility.checkUserIsLogged(request.getSession(), login)) {
+        User user = User.createUser(login, password);
+        if (LoginService.DBContainsUser(user)) {
+            if (CommandUtility.checkUserIsLogged(request.getSession(), user)) {
                 request.setAttribute("user_already_logged", true);
                 logger.error("User with login " + login + " already logged");
                 return Path.LOGIN;
             }
-            request.getSession().setAttribute("userLogin", login);
+            request.getSession().setAttribute("user", user);
+
             if (login.equals("Admin")) {
                 CommandUtility.setUserRole(request.getSession(), User.ROLE.ADMIN);
                 logger.info("Success login, as Admin ( login: " + login + " )");

@@ -1,6 +1,6 @@
 package com.example.controller.command;
 
-import com.example.DB.entity.User;
+import com.example.model.entity.User;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
@@ -13,7 +13,8 @@ public class CommandUtility {
         session.removeAttribute("role");
     }
 
-    public static boolean checkUserIsLogged(HttpSession session, String userLogin){
+    public static boolean checkUserIsLogged(HttpSession session, User user){
+        String userLogin = user.getLogin();
         HashSet<String> loggedUsers = (HashSet<String>) session.getServletContext().getAttribute("loggedUsers");
         if (loggedUsers == null){
             loggedUsers = new HashSet<>();
@@ -27,7 +28,8 @@ public class CommandUtility {
         return false;
     }
     public static void deleteUserFromLogged(HttpSession session){
-        String userLogin = (String)session.getAttribute("userLogin");
+        User user = (User) session.getAttribute("user");
+        String userLogin = user.getLogin();
         HashSet<String> loggedUsers = (HashSet<String>) session.getServletContext().getAttribute("loggedUsers");
         if (loggedUsers == null){
             loggedUsers = new HashSet<>();

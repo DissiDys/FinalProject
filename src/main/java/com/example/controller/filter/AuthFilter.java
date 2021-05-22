@@ -1,7 +1,6 @@
 package com.example.controller.filter;
 
-import com.example.DB.entity.User;
-import com.example.controller.Controller;
+import com.example.model.entity.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

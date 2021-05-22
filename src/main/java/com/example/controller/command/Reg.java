@@ -2,7 +2,7 @@ package com.example.controller.command;
 
 import com.example.controller.constants.Path;
 import com.example.controller.util.Validation;
-import com.example.service.RegistrationService;
+import com.example.model.service.RegistrationService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

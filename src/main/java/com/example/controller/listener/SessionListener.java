@@ -1,6 +1,6 @@
 package com.example.controller.listener;
 
-import com.example.DB.entity.User;
+import com.example.model.entity.User;
 import com.example.controller.command.CommandUtility;
 
 import javax.servlet.http.HttpSessionEvent;
