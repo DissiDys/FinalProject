@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
         if (role != null && (enumRole == null || !role.equals(enumRole.toString()))) {
             logger.error("Access denied, log as a " + role);
             req.setAttribute("msg", "Access error, auth, as a " + role);
-            req.getRequestDispatcher("/view/jsp/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/jsp/role/guest/error.jsp").forward(req, resp);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

@@ -16,6 +16,7 @@ public class LogOut implements Command{
         logger.info("User with login " + user.getLogin() + " logged out");
         CommandUtility.deleteUserFromLogged(request.getSession());
         CommandUtility.deleteUserRole(request.getSession());
+        CommandUtility.setUserRole(request.getSession(), User.ROLE.GUEST);
         return Path.MAIN_PAGE;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.model.dao.impl;
 
 import com.example.model.dao.UserDao;
+import com.example.model.dao.exception.NotUniqueLoginException;
 import com.example.model.dao.mapper.UserMapper;
 import com.example.model.entity.User;
 import com.example.controller.constants.SQLConstants;
@@ -22,7 +23,7 @@ public class JDBCUserDao implements UserDao {
 
 
     @Override
-    public boolean create(User user) {
+    public boolean create(User user) throws NotUniqueLoginException {
         boolean res = false;
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
@@ -37,6 +38,7 @@ public class JDBCUserDao implements UserDao {
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
+            throw new NotUniqueLoginException();
         }
         return res;
     }

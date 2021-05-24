@@ -23,10 +23,10 @@
         <a href="${EnLang}" class="localizationEN">EN</a>
         <a href="${UkrLang}" class="localizationUA">UKR</a>
     </div>
-    <form action="${pageContext.request.contextPath}/view/jsp/login.jsp">
+    <form action="${pageContext.request.contextPath}/view/jsp/role/guest/login.jsp">
         <input type="submit" class="btn" value="<fmt:message key = "sign_in" bundle = "${bundle}"/>"/>
     </form>
-    <form action="${pageContext.request.contextPath}/view/jsp/registration.jsp">
+    <form action="${pageContext.request.contextPath}/view/jsp/role/guest/registration.jsp">
         <input type="submit" class="btn" value="<fmt:message key = "sign_up" bundle = "${bundle}"/>"/>
     </form>
 </body>

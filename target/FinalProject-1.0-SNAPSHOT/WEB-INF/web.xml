@@ -28,6 +28,7 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/app/role/*</url-pattern>
+        <url-pattern>/view/jsp/role/*</url-pattern>
     </filter-mapping>
 
     <listener>
