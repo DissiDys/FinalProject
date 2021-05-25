@@ -2,7 +2,7 @@ package com.example.controller.command;
 
 import com.example.controller.constants.Path;
 import com.example.controller.util.Validation;
-import com.example.model.dao.exception.NotUniqueLoginException;
+import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.service.RegistrationService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,7 +24,7 @@ public class Reg implements Command {
         }
         try {
             RegistrationService.regNewUser(login, password);
-        } catch (NotUniqueLoginException e) {
+        } catch (NotUniqueInsertionException e) {
             logger.info("Not unique login ( login: " + login + " )");
             request.setAttribute("not_unique_login", true);
             return Path.REGISTRATION;

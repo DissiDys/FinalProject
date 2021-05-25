@@ -1,5 +1,6 @@
 package com.example.model.dao.impl;
 
+import com.example.model.dao.CategoryDao;
 import com.example.model.dao.DaoFactory;
 import com.example.model.dao.UserDao;
 import org.apache.log4j.LogManager;
@@ -16,6 +17,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());
+    }
+
+    @Override
+    public CategoryDao createCategoryDao() {
+        return new JDBCCategoryDao(getConnection());
     }
 
     private Connection getConnection(){

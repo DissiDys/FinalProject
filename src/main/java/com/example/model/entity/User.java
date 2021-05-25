@@ -1,10 +1,5 @@
 package com.example.model.entity;
 
-
-import com.google.common.hash.Hashing;
-
-import java.nio.charset.StandardCharsets;
-
 public class User {
     private String login;
     private String password;

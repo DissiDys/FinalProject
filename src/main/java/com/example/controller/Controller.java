@@ -1,7 +1,11 @@
 package com.example.controller;
 
 import com.example.controller.command.*;
-import com.example.controller.constants.Path;
+import com.example.controller.command.categoriesCommand.ActivitiesCategories;
+import com.example.controller.command.categoriesCommand.AddCategory;
+import com.example.controller.command.categoriesCommand.DeleteCategory;
+import com.example.controller.command.userCommand.DeleteUser;
+import com.example.controller.command.userCommand.UsersList;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -20,8 +24,11 @@ public class Controller extends HttpServlet {
         commands.put("logout", new LogOut());
         commands.put("login", new Login());
         commands.put("registration", new Reg());
-        commands.put("usersList", new ManageUsers());
+        commands.put("usersList", new UsersList());
         commands.put("deleteUser", new DeleteUser());
+        commands.put("activitiesCategories", new ActivitiesCategories());
+        commands.put("deleteCategory", new DeleteCategory());
+        commands.put("addCategory", new AddCategory());
     }
 
     @Override
@@ -43,7 +50,7 @@ public class Controller extends HttpServlet {
         path = path.replaceAll(".*/app/", "");
 
         Command command = commands.getOrDefault(path,
-                (r) -> Path.MAIN_PAGE);
+                (r) -> "/app/logout");
         String page = command.execute(request);
 
         if (page.contains("redirect:")) {
@@ -53,5 +60,6 @@ public class Controller extends HttpServlet {
             logger.debug("Opening " + page);
             request.getRequestDispatcher(page).forward(request, response);
         }
+        logger.info("Role: " + request.getSession().getAttribute("role"));
     }
 }

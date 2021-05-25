@@ -6,4 +6,8 @@ public class SQLConstants {
     public static final String FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login = (?);";
     public static final String ADD_NEW_USER = "INSERT INTO user (login, password) VALUES (?, ?);";
     public static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE id = (?);";
+
+    public static final String ADD_NEW_CATEGORY = "INSERT INTO category (name) VALUES (?);";
+    public static final String FIND_ALL_CATEGORIES = "SELECT * FROM category;";
+    public static final String DELETE_CATEGORY_BY_ID = "DELETE FROM category WHERE id = (?);";
 }

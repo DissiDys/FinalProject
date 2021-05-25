@@ -1,11 +1,11 @@
 package com.example.model.dao.impl;
 
-import com.example.model.dao.UserDao;
-import com.example.model.dao.exception.NotUniqueInsertionException;
-import com.example.model.dao.mapper.UserMapper;
-import com.example.model.entity.User;
 import com.example.controller.constants.SQLConstants;
-
+import com.example.model.dao.CategoryDao;
+import com.example.model.dao.mapper.CategoryMapper;
+import com.example.model.dao.mapper.UserMapper;
+import com.example.model.entity.Category;
+import com.example.model.entity.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -13,74 +13,71 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCUserDao implements UserDao {
+public class JDBCCategoryDao implements CategoryDao {
     private final Logger logger = LogManager.getLogger(JDBCUserDao.class);
     private Connection connection;
 
-    public JDBCUserDao(Connection connection) {
+    public JDBCCategoryDao(Connection connection) {
         this.connection = connection;
     }
 
-
     @Override
-    public boolean create(User user) throws NotUniqueInsertionException {
+    public boolean create(Category category) {
         boolean res = false;
-        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.ADD_NEW_CATEGORY, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
-            pstmt.setString(i++, user.getLogin());
-            pstmt.setString(i++, user.getPassword());
+            pstmt.setString(i++, category.getName());
             if (pstmt.executeUpdate() > 0) {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
-                    user.setId(rs.getLong(1));
+                    category.setId(rs.getLong(1));
                 }
                 res = true;
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
-            throw new NotUniqueInsertionException();
         }
         return res;
     }
 
     @Override
-    public User findById(int id) {
-        for (User u : findAll()) {
-            if (u.getId() == id) return u;
+    public Category findById(int id) {
+        for (Category c : findAll()) {
+            if (c.getId() == id) return c;
         }
         return null;
     }
 
     @Override
-    public List<User> findAll() {
-        List<User> users = new ArrayList<>();
+    public List<Category> findAll() {
+        List<Category> categories = new ArrayList<>();
         try (
                 Statement stmt = connection.createStatement();
-                ResultSet resultSet = stmt.executeQuery(SQLConstants.FIND_ALL_USERS)
+                ResultSet resultSet = stmt.executeQuery(SQLConstants.FIND_ALL_CATEGORIES)
         ) {
-            UserMapper userMapper = new UserMapper();
+            CategoryMapper categoryMapper = new CategoryMapper();
 
             while (resultSet.next()) {
-                users.add(userMapper.extractFromResultSet(resultSet));
+                categories.add(categoryMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
-        return users;
+        return categories;
     }
 
     @Override
-    public void update(User entity) {
+    public void update(Category entity) {
 
     }
 
     @Override
     public void delete(int id) {
-        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_USER_BY_ID)) {
-            String login = findById(id).getLogin();
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_CATEGORY_BY_ID)) {
+            String name = findById(id).getName();
             pstmt.setString(1, String.valueOf(id));
             pstmt.executeUpdate();
-            logger.info("User with login: " + login + " was deleted");
+            logger.info("User with login: " + name + " was deleted");
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
