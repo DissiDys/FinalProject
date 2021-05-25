@@ -32,11 +32,11 @@ public class Login implements Command {
             if (login.equals("Admin")) {
                 CommandUtility.setUserRole(request.getSession(), User.ROLE.ADMIN);
                 logger.info("Success login, as Admin ( login: " + login + " )");
-                return "/view/jsp/role/admin/adminAccount.jsp";
+                return Path.ADMIN_PAGE;
             } else {
                 CommandUtility.setUserRole(request.getSession(), User.ROLE.USER);
                 logger.info("Success login, as User ( login: " + login + " )");
-                return "/view/jsp/role/user/userAccount.jsp";
+                return Path.USER_PAGE;
             }
         }
 

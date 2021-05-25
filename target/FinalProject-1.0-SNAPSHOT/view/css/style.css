@@ -127,6 +127,21 @@ a {
     border: 1px solid black;
 }
 
+.logout {
+    -webkit-text-stroke: 0.2px black;
+    top: 10px;
+    display: compact;
+    width: 6%;
+    margin: 10px 0;
+    background: #c42509;
+    color: white;
+    padding: 10px;
+    font-size: 0.9rem;
+    position: absolute;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
 .localizationUA {
     -webkit-text-stroke: 0.05px black;
     top: 10px;

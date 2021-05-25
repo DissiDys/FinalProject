@@ -12,6 +12,9 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class JDBCUserDao implements UserDao {
     private final Logger logger = LogManager.getLogger(JDBCUserDao.class);
@@ -45,6 +48,9 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findById(int id) {
+        for (User u : findAll()) {
+            if (u.getId() == id) return u;
+        }
         return null;
     }
 
@@ -73,7 +79,14 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void delete(int id) {
-
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_USER_BY_ID)) {
+            String login = findById(id).getLogin();
+            pstmt.setString(1, String.valueOf(id));
+            pstmt.executeUpdate();
+            logger.info("User with login: " + login + " was deleted");
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
     }
 
     @Override

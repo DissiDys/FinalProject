@@ -20,6 +20,8 @@ public class Controller extends HttpServlet {
         commands.put("logout", new LogOut());
         commands.put("login", new Login());
         commands.put("registration", new Reg());
+        commands.put("usersList", new ManageUsers());
+        commands.put("deleteUser", new DeleteUser());
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        logger.debug("User`s request URI: " + path);
+        logger.debug("User`s request URL: " + request.getRequestURL());
 
         path = path.replaceAll(".*/app/", "");
 
