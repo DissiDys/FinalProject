@@ -10,4 +10,8 @@ public class SQLConstants {
     public static final String ADD_NEW_CATEGORY = "INSERT INTO category (name) VALUES (?);";
     public static final String FIND_ALL_CATEGORIES = "SELECT * FROM category;";
     public static final String DELETE_CATEGORY_BY_ID = "DELETE FROM category WHERE id = (?);";
+
+    public static final String ADD_NEW_ACTIVITY = "INSERT INTO activity (name, category_id) VALUES (?, ?);";
+    public static final String FIND_ALL_ACTIVITIES= "SELECT * FROM activity;";
+    public static final String DELETE_ACTIVITY_BY_ID = "DELETE FROM activity WHERE id = (?);";
 }

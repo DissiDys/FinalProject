@@ -2,10 +2,9 @@ package com.example.model.dao.impl;
 
 import com.example.controller.constants.SQLConstants;
 import com.example.model.dao.CategoryDao;
+import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.mapper.CategoryMapper;
-import com.example.model.dao.mapper.UserMapper;
 import com.example.model.entity.Category;
-import com.example.model.entity.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class JDBCCategoryDao implements CategoryDao {
     }
 
     @Override
-    public boolean create(Category category) {
+    public boolean create(Category category) throws NotUniqueInsertionException {
         boolean res = false;
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.ADD_NEW_CATEGORY, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
@@ -36,6 +35,7 @@ public class JDBCCategoryDao implements CategoryDao {
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
+            throw new NotUniqueInsertionException();
         }
         return res;
     }
@@ -77,7 +77,7 @@ public class JDBCCategoryDao implements CategoryDao {
             String name = findById(id).getName();
             pstmt.setString(1, String.valueOf(id));
             pstmt.executeUpdate();
-            logger.info("User with login: " + name + " was deleted");
+            logger.info("Category with name: " + name + " was deleted");
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }

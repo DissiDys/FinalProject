@@ -1,5 +1,6 @@
 package com.example.model.dao.impl;
 
+import com.example.model.dao.ActivityDao;
 import com.example.model.dao.CategoryDao;
 import com.example.model.dao.DaoFactory;
 import com.example.model.dao.UserDao;
@@ -22,6 +23,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public CategoryDao createCategoryDao() {
         return new JDBCCategoryDao(getConnection());
+    }
+
+    @Override
+    public ActivityDao createActivityDao() {
+        return new JDBCActivityDao(getConnection());
     }
 
     private Connection getConnection(){
