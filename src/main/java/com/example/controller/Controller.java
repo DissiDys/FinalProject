@@ -1,6 +1,10 @@
 package com.example.controller;
 
 import com.example.controller.command.*;
+import com.example.controller.command.activityCommand.ActivitiesList;
+import com.example.controller.command.activityCommand.AddActivity;
+import com.example.controller.command.activityCommand.DeleteActivity;
+import com.example.controller.command.activityCommand.SortActivities;
 import com.example.controller.command.categoriesCommand.ActivitiesCategories;
 import com.example.controller.command.categoriesCommand.AddCategory;
 import com.example.controller.command.categoriesCommand.DeleteCategory;
@@ -29,6 +33,10 @@ public class Controller extends HttpServlet {
         commands.put("activitiesCategories", new ActivitiesCategories());
         commands.put("deleteCategory", new DeleteCategory());
         commands.put("addCategory", new AddCategory());
+        commands.put("activities", new ActivitiesList());
+        commands.put("deleteActivity", new DeleteActivity());
+        commands.put("addActivity", new AddActivity());
+        commands.put("sortActivities", new SortActivities());
     }
 
     @Override

@@ -1,16 +1,20 @@
 package com.example.model.service;
 
+import com.example.model.dao.UserDao;
 import com.example.model.dao.impl.JDBCDaoFactory;
 import com.example.model.entity.User;
 
 public class LoginService {
     public static boolean DBContainsUser(User user) {
-        for (User u : JDBCDaoFactory.getInstance().createUserDao().findAll()) {
+        UserDao dao = JDBCDaoFactory.getInstance().createUserDao();
+        for (User u : dao.findAll()) {
             if (user.getLogin().equals(u.getLogin())) {
                 user.setId(u.getId());
+                dao.close();
                 return true;
             }
         }
+        dao.close();
         return false;
     }
 }

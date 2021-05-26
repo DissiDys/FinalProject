@@ -27,7 +27,11 @@ public class JDBCActivityDao implements ActivityDao {
             int i = 1;
             pstmt.setString(i++, activity.getName());
             if (activity.getCategory() != null){
-                JDBCDaoFactory.getInstance().createCategoryDao().create(activity.getCategory());
+                try {
+                    JDBCDaoFactory.getInstance().createCategoryDao().create(activity.getCategory());
+                } catch (NotUniqueInsertionException e) {
+                    logger.debug("Created activity with already existed category, activity.name: " + activity.getName());
+                }
                 pstmt.setString(i++, String.valueOf(activity.getCategory().getId()));
             } else {
                 pstmt.setString(i++, "4");
@@ -90,6 +94,10 @@ public class JDBCActivityDao implements ActivityDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            logger.error("Connection close error");
+        }
     }
 }

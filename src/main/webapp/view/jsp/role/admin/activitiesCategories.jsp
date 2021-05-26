@@ -19,7 +19,7 @@
 <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp">back</a>
 <h2><fmt:message key="activities_categories" bundle="${bundle}"/></h2>
 <form method="post" action="${pageContext.request.contextPath}/app/addCategory">
-    <input type="text" id="name" name="name" autocomplete="off">
+    <input required type="text" id="name" name="name" autocomplete="off">
     <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
 </form>
 <table>
@@ -27,10 +27,15 @@
         <th><fmt:message key="add" bundle="${bundle}"/></th>
     </tr>
     <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
-            <tr>
-                <td>${category.name}<hr/></td>
-                <td><a href="${pageContext.request.contextPath}/app/deleteCategory?id=${category.id}"><fmt:message key="delete" bundle="${bundle}"/></a><hr/></td>
-            </tr>
+        <tr>
+            <td>${category.name}
+                <hr/>
+            </td>
+            <td><a href="${pageContext.request.contextPath}/app/deleteCategory?id=${category.id}"><fmt:message
+                    key="delete" bundle="${bundle}"/></a>
+                <hr/>
+            </td>
+        </tr>
     </c:forEach>
 </table>
 </body>

@@ -88,6 +88,10 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            logger.error("Connection close error");
+        }
     }
 }

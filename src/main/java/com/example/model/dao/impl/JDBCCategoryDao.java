@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCCategoryDao implements CategoryDao {
-    private final Logger logger = LogManager.getLogger(JDBCUserDao.class);
+    private final Logger logger = LogManager.getLogger(JDBCCategoryDao.class);
     private Connection connection;
 
     public JDBCCategoryDao(Connection connection) {
@@ -34,7 +34,6 @@ public class JDBCCategoryDao implements CategoryDao {
                 res = true;
             }
         } catch (SQLException ex) {
-            logger.error(ex.getMessage(), ex);
             throw new NotUniqueInsertionException();
         }
         return res;
@@ -85,6 +84,10 @@ public class JDBCCategoryDao implements CategoryDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            logger.error("Connection close error");
+        }
     }
 }
