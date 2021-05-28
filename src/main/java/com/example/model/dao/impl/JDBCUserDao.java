@@ -1,8 +1,11 @@
 package com.example.model.dao.impl;
 
+import com.example.model.dao.ActivityDao;
 import com.example.model.dao.UserDao;
 import com.example.model.dao.exception.NotUniqueInsertionException;
+import com.example.model.dao.mapper.ActivityMapper;
 import com.example.model.dao.mapper.UserMapper;
+import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.controller.constants.SQLConstants;
 
@@ -41,6 +44,60 @@ public class JDBCUserDao implements UserDao {
             throw new NotUniqueInsertionException();
         }
         return res;
+    }
+
+    public void setActivityForUser(User user, Activity activity) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_ACTIVITY_FOR_USER)) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+
+            try {
+                create(user);
+            } catch (NotUniqueInsertionException e) {
+            }
+
+            try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
+                dao.create(activity);
+            } catch (NotUniqueInsertionException e) {
+            }
+
+            int i = 1;
+
+            pstmt.setLong(i++, user.getId());
+            pstmt.setLong(i++, activity.getId());
+            pstmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException ex) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+            logger.error(ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public List<Activity> findUsersActivities(User user) {
+        List<Activity> activities = new ArrayList<>();
+
+        try (
+                Statement stmt = connection.createStatement();
+                ResultSet resultSet = stmt.executeQuery(SQLConstants.FIND_USERS_ACTIVITIES + user.getId());
+        ) {
+            ActivityMapper activityMapper = new ActivityMapper();
+
+            while (resultSet.next()) {
+                activities.add(activityMapper.extractFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+
+        return activities;
     }
 
     @Override

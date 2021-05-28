@@ -14,4 +14,9 @@ public class SQLConstants {
     public static final String ADD_NEW_ACTIVITY = "INSERT INTO activity (name, category_id) VALUES (?, ?);";
     public static final String FIND_ALL_ACTIVITIES= "SELECT * FROM activity INNER JOIN category ON activity.category_id = category.id;";
     public static final String DELETE_ACTIVITY_BY_ID = "DELETE FROM activity WHERE id = (?);";
+
+    public static final String SET_ACTIVITY_FOR_USER = "INSERT INTO user_has_activity (user_id, activity_id) VALUES (?, ?);";
+    public static final String FIND_USERS_ACTIVITIES = "SELECT * FROM mydb.user_has_activity " +
+            "INNER JOIN activity ON activity.id = user_has_activity.activity_id " +
+            "INNER JOIN category ON activity.category_id = category.id WHERE user_id = ";
 }

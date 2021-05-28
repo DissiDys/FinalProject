@@ -36,7 +36,7 @@ public class Login implements Command {
             } else {
                 CommandUtility.setUserRole(request.getSession(), User.ROLE.USER);
                 logger.info("Success login, as User ( login: " + login + " )");
-                return Path.USER_PAGE;
+                return "/app/usersActivities";
             }
         }
 

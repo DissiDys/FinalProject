@@ -3,7 +3,7 @@ package com.example.controller.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validation {
+public class ValidationUtil {
     public static boolean isLoginValid(String login){
         Matcher m = Pattern.compile("(?=^)[a-zA-Z1-9_!#$%*]*(?=$)").matcher(login);
         return m.find();

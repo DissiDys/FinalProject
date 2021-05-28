@@ -1,4 +1,4 @@
-package com.example.controller.command.categoriesCommand;
+package com.example.controller.command.AdminCommands.categoriesCommand;
 
 import com.example.controller.command.Command;
 import com.example.model.dao.exception.NotUniqueInsertionException;

@@ -1,15 +1,15 @@
 package com.example.controller;
 
 import com.example.controller.command.*;
-import com.example.controller.command.activityCommand.ActivitiesList;
-import com.example.controller.command.activityCommand.AddActivity;
-import com.example.controller.command.activityCommand.DeleteActivity;
-import com.example.controller.command.activityCommand.SortActivities;
-import com.example.controller.command.categoriesCommand.ActivitiesCategories;
-import com.example.controller.command.categoriesCommand.AddCategory;
-import com.example.controller.command.categoriesCommand.DeleteCategory;
-import com.example.controller.command.userCommand.DeleteUser;
-import com.example.controller.command.userCommand.UsersList;
+import com.example.controller.command.AdminCommands.activityCommand.ActivitiesList;
+import com.example.controller.command.AdminCommands.activityCommand.AddActivity;
+import com.example.controller.command.AdminCommands.activityCommand.DeleteActivity;
+import com.example.controller.command.AdminCommands.activityCommand.SortActivities;
+import com.example.controller.command.AdminCommands.categoriesCommand.ActivitiesCategories;
+import com.example.controller.command.AdminCommands.categoriesCommand.AddCategory;
+import com.example.controller.command.AdminCommands.categoriesCommand.DeleteCategory;
+import com.example.controller.command.AdminCommands.userCommand.DeleteUser;
+import com.example.controller.command.AdminCommands.userCommand.UsersList;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -37,6 +37,7 @@ public class Controller extends HttpServlet {
         commands.put("deleteActivity", new DeleteActivity());
         commands.put("addActivity", new AddActivity());
         commands.put("sortActivities", new SortActivities());
+        commands.put("usersActivities", new UsersActivitiesList());
     }
 
     @Override

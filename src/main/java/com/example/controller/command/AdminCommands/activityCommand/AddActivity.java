@@ -1,6 +1,5 @@
-package com.example.controller.command.activityCommand;
+package com.example.controller.command.AdminCommands.activityCommand;
 
-import com.example.controller.Controller;
 import com.example.controller.command.Command;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.entity.Activity;

@@ -13,6 +13,8 @@
     <c:param name="lang" value="ukr"/>
 </c:url>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
     <title><fmt:message key="activities" bundle="${bundle}"/></title>
 </head>
 <body>
@@ -38,7 +40,14 @@
         <option value="category"><fmt:message key="by_category" bundle="${bundle}"/></option>
         <option value="users"><fmt:message key="by_amount_of_users" bundle="${bundle}"/></option>
     </select>
-
+    <div id="checkboxes">
+        <input type="checkbox" id="checkAll">
+        <label for="checkAll">Check all</label>
+        <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
+            <input type="checkbox" , name="${category.name}">
+            <label for="${category.name}">${category.name}</label>
+        </c:forEach>
+    </div>
     <input type="submit" value="<fmt:message key="accept" bundle="${bundle}"/>">
 </form>
 <table>
@@ -48,11 +57,36 @@
     </tr>
     <c:forEach items="${pageContext.request.getAttribute('activitiesList')}" var="activity" varStatus="status">
         <tr>
-            <td>${activity.name}<hr/></td>
-            <td>${activity.category.name}<hr/></td>
-            <td><a href="${pageContext.request.contextPath}/app/deleteActivity?id=${activity.id}"><fmt:message key="delete" bundle="${bundle}"/></a><hr/></td>
+            <td>${activity.name}
+                <hr/>
+            </td>
+            <td>${activity.category.name}
+                <hr/>
+            </td>
+            <td><a href="${pageContext.request.contextPath}/app/deleteActivity?id=${activity.id}"><fmt:message
+                    key="delete" bundle="${bundle}"/></a>
+                <hr/>
+            </td>
         </tr>
     </c:forEach>
 </table>
+<script>
+    var main = document.querySelector('#checkboxes [type="checkbox"]'),
+        all = document.querySelectorAll('#checkboxes > [type="checkbox"]');
+
+    for (var i = 0; i < all.length; i++) {  // 1 и 2 пункт задачи
+        all[i].onclick = function () {
+            var allChecked = document.querySelectorAll('#checkboxes > [type="checkbox"]:checked').length;
+            main.checked = allChecked == all.length;
+            main.indeterminate = allChecked > 0 && allChecked < all.length;
+        }
+    }
+
+    main.onclick = function () {  // 3
+        for (var i = 0; i < all.length; i++) {
+            all[i].checked = this.checked;
+        }
+    }
+</script>
 </body>
 </html>

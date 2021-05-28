@@ -1,4 +1,4 @@
-package com.example.controller.command.userCommand;
+package com.example.controller.command.AdminCommands.userCommand;
 
 import com.example.controller.command.Command;
 import com.example.controller.constants.Path;

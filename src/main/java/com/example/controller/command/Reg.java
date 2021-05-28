@@ -1,7 +1,7 @@
 package com.example.controller.command;
 
 import com.example.controller.constants.Path;
-import com.example.controller.util.Validation;
+import com.example.controller.util.ValidationUtil;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.service.RegistrationService;
 import org.apache.log4j.LogManager;
@@ -18,7 +18,7 @@ public class Reg implements Command {
         String password = request.getParameter("password");
         System.out.println(login + " " + password);
         if (login == null || login.equals("") || password == null || password.equals("")
-                || !Validation.isLoginValid(login) || !Validation.isPasswordValid(password)) {
+                || !ValidationUtil.isLoginValid(login) || !ValidationUtil.isPasswordValid(password)) {
             logger.error("Invalid login or password ( login: " + login + ", password: " + password + " )");
             return Path.REGISTRATION;
         }
