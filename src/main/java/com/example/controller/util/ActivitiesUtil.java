@@ -14,17 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ActivitiesUtil {
-    public static void sort(HttpServletRequest request) {
+    public static void sort(HttpServletRequest request, List<Activity> sortedActivityList) {
         String sortingMethod = request.getParameter("sort");
-        User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
-        List<Activity> sortedActivityList = new ArrayList<>();
-        if (role.name().equals("ADMIN")) {
-            sortedActivityList = ActivitiesListService.getActivitiesList();
-        }
-        if (role.name().equals("USER")){
-            User user = (User) request.getSession().getAttribute("user");
-            sortedActivityList = UserActivitiesListService.getUserActivitiesList(user);
-        }
 
         switch (sortingMethod) {
             case "name":

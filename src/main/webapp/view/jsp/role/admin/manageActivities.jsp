@@ -39,10 +39,10 @@
         <option value="users"><fmt:message key="by_amount_of_users" bundle="${bundle}"/></option>
     </select>
     <div id="checkboxes">
-        <input type="checkbox" id="checkAll">
+        <input checked type="checkbox" id="checkAll">
         <label for="checkAll">Check all</label>
         <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
-            <input type="checkbox" , name="${category.name}">
+            <input checked type="checkbox" , name="${category.name}">
             <label for="${category.name}">${category.name}</label>
         </c:forEach>
     </div>

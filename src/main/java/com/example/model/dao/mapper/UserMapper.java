@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class UserMapper implements ObjectMapper<User>{
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
-        User user = User.createUser(rs.getString(2), rs.getString(3));
-        user.setId(rs.getLong(1));
+        User user = User.createUser(rs.getString("login"), rs.getString("password"));
+        user.setId(rs.getLong("user.id"));
         return user;
     }
 }

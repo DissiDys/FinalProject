@@ -134,8 +134,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void sendRequestToAddActivity(User user, Activity activity) {
-        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SEND_REQUEST_TO_ADD_ACTIVITY)) {
+    public void setUnconfirmedActivityForUser(User user, Activity activity) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_UNCONFIRMED_ACTIVITY_FOR_USER)) {
             pstmt.setString(1, String.valueOf(user.getId()));
             pstmt.setString(2, String.valueOf(activity.getId()));
             pstmt.executeUpdate();
@@ -144,6 +144,37 @@ public class JDBCUserDao implements UserDao {
             logger.error(ex.getMessage(), ex);
         }
     }
+
+    @Override
+    public List<Activity> getUnconfirmedActivitiesForUser(User user) {
+        List<Activity> activities = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_UNCONFIRMED_ACTIVITIES_FOR_USER);
+            pstmt.setString(1, String.valueOf(user.getId()));
+            ResultSet resultSet = pstmt.executeQuery();
+
+            ActivityMapper activityMapper = new ActivityMapper();
+            while (resultSet.next()){
+                activities.add(activityMapper.extractFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return activities;
+    }
+
+    @Override
+    public void deleteUnconfirmedActivityForUser(User user, Activity activity) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_UNCONFIRMED_ACTIVITY_FOR_USER)) {
+            pstmt.setString(1, String.valueOf(user.getId()));
+            pstmt.setString(2, String.valueOf(activity.getId()));
+            pstmt.executeUpdate();
+            logger.info("was deleted unconfirmed activity with id " + activity.getId() + " for user with id " + user.getId());
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+    }
+
 
     @Override
     public User findById(int id) {

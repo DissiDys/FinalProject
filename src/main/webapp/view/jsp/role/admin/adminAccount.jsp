@@ -35,7 +35,7 @@
             <br/>
             <a href="${pageContext.request.contextPath}/app/activities"><fmt:message key="activities" bundle="${bundle}"/></a>
             <br/>
-            <a href="${pageContext.request.contextPath}/app/acceptActivitiesForUser"><fmt:message key="accept" bundle="${bundle}"/></a>
+            <a href="${pageContext.request.contextPath}/app/unconfirmedActivitiesList"><fmt:message key="accept" bundle="${bundle}"/></a>
         </div>
     </body>
 </html>

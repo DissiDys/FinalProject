@@ -8,7 +8,7 @@ import com.example.model.entity.User;
 public class SendRequestToAddActivityService {
     public static void sendRequest(User user, Activity activity) {
         try(UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
-            dao.sendRequestToAddActivity(user, activity);
+            dao.setUnconfirmedActivityForUser(user, activity);
         }
     }
 }

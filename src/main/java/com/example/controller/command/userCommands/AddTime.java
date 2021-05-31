@@ -23,10 +23,10 @@ public class AddTime implements Command {
         SimpleDateFormat format= new SimpleDateFormat("hh:mm:ss");
         try {
             User user = (User) request.getSession().getAttribute("user");
-            int id = Integer.parseInt(request.getParameter("activity"));
+            int id = Integer.parseInt(request.getParameter("activity_id"));
             Activity activity = ActivitiesListService.getActivityByID(id);
             Time tempTime = new Time(format.parse(GetSpentTimeByActivityService.getTimeByActivity(user, activity) + ":00").getTime());
-            Time time = new Time(format.parse(request.getParameter("time") + ":00").getTime() + tempTime.getTime());
+            Time time = new Time(format.parse(request.getParameter("time") + ":00").getTime() + tempTime.getTime() + 10800000);
             SetSpentTimeOnActivityService.setSpentTime(user, activity, time);
         } catch (ParseException e) {
             logger.error(e.getMessage(), e);

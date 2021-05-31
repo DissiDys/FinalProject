@@ -32,7 +32,6 @@
     <select required name="sort">
         <option value="name"><fmt:message key="by_name" bundle="${bundle}"/></option>
         <option value="category"><fmt:message key="by_category" bundle="${bundle}"/></option>
-        <option value="users"><fmt:message key="by_amount_of_users" bundle="${bundle}"/></option>
     </select>
     <div id="checkboxes">
         <input checked type="checkbox" id="checkAll">
@@ -60,9 +59,10 @@
                 <hr/>
             </td>
             <td>
+                ${pageContext.request.getAttribute("timeSpent".concat(activity.name))}
                 <form action="${pageContext.request.contextPath}/app/addTime">
                     <input type="time" name="time">
-                    <input type="text" name="activity" hidden value="${activity.id}">
+                    <input type="text" name="activity_id" hidden value="${activity.id}">
                     <input type="submit" value="<fmt:message key="send" bundle="${bundle}"/>">
                 </form>
                 <hr/>

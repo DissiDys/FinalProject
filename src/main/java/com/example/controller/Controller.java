@@ -38,7 +38,8 @@ public class Controller extends HttpServlet {
         commands.put("userActivities", new UserActivities());
         commands.put("addTime", new AddTime());
         commands.put("sendAddActivityRequestToAdmin", new SendRequestToAddActivity());
-        commands.put("acceptActivitiesForUser", new AcceptActivitiesForUser());
+        commands.put("acceptActivityForUser", new AcceptActivityForUser());
+        commands.put("unconfirmedActivitiesList", new UnconfirmedActivitiesList());
     }
 
     @Override
