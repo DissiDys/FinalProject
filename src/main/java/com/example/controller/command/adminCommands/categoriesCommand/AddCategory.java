@@ -1,8 +1,8 @@
-package com.example.controller.command.AdminCommands.categoriesCommand;
+package com.example.controller.command.adminCommands.categoriesCommand;
 
 import com.example.controller.command.Command;
 import com.example.model.dao.exception.NotUniqueInsertionException;
-import com.example.model.service.categoryServices.AddCategoryService;
+import com.example.model.service.AdminService.categoryServices.AddCategoryService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

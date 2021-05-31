@@ -1,10 +1,10 @@
-package com.example.controller.command.AdminCommands.activityCommand;
+package com.example.controller.command.adminCommands.activityCommand;
 
 import com.example.controller.command.Command;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.entity.Activity;
 
-import com.example.model.service.activityService.AddActivityService;
+import com.example.model.service.AdminService.activityService.AddActivityService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

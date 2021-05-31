@@ -1,6 +1,5 @@
-package com.example.model.service.categoryServices;
+package com.example.model.service.AdminService.categoryServices;
 
-import com.example.model.dao.ActivityDao;
 import com.example.model.dao.CategoryDao;
 import com.example.model.dao.impl.JDBCDaoFactory;
 import com.example.model.entity.Category;

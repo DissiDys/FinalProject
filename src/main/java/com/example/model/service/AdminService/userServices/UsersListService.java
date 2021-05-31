@@ -1,4 +1,4 @@
-package com.example.model.service.userServices;
+package com.example.model.service.AdminService.userServices;
 
 import com.example.model.dao.UserDao;
 import com.example.model.dao.impl.JDBCDaoFactory;

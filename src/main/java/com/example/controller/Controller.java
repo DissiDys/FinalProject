@@ -1,15 +1,13 @@
 package com.example.controller;
 
 import com.example.controller.command.*;
-import com.example.controller.command.AdminCommands.activityCommand.ActivitiesList;
-import com.example.controller.command.AdminCommands.activityCommand.AddActivity;
-import com.example.controller.command.AdminCommands.activityCommand.DeleteActivity;
-import com.example.controller.command.AdminCommands.activityCommand.SortActivities;
-import com.example.controller.command.AdminCommands.categoriesCommand.ActivitiesCategories;
-import com.example.controller.command.AdminCommands.categoriesCommand.AddCategory;
-import com.example.controller.command.AdminCommands.categoriesCommand.DeleteCategory;
-import com.example.controller.command.AdminCommands.userCommand.DeleteUser;
-import com.example.controller.command.AdminCommands.userCommand.UsersList;
+import com.example.controller.command.adminCommands.activityCommand.*;
+import com.example.controller.command.adminCommands.categoriesCommand.*;
+import com.example.controller.command.adminCommands.userManageCommand.DeleteUser;
+import com.example.controller.command.adminCommands.userManageCommand.UserList;
+import com.example.controller.command.userCommands.AddTime;
+import com.example.controller.command.userCommands.SendRequestToAddActivity;
+import com.example.controller.command.userCommands.UserActivities;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -28,7 +26,7 @@ public class Controller extends HttpServlet {
         commands.put("logout", new LogOut());
         commands.put("login", new Login());
         commands.put("registration", new Reg());
-        commands.put("usersList", new UsersList());
+        commands.put("usersList", new UserList());
         commands.put("deleteUser", new DeleteUser());
         commands.put("activitiesCategories", new ActivitiesCategories());
         commands.put("deleteCategory", new DeleteCategory());
@@ -37,7 +35,10 @@ public class Controller extends HttpServlet {
         commands.put("deleteActivity", new DeleteActivity());
         commands.put("addActivity", new AddActivity());
         commands.put("sortActivities", new SortActivities());
-        commands.put("usersActivities", new UsersActivitiesList());
+        commands.put("userActivities", new UserActivities());
+        commands.put("addTime", new AddTime());
+        commands.put("sendAddActivityRequestToAdmin", new SendRequestToAddActivity());
+        commands.put("acceptActivitiesForUser", new AcceptActivitiesForUser());
     }
 
     @Override

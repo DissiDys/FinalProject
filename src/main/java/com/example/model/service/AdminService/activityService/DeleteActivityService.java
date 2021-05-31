@@ -1,8 +1,6 @@
-package com.example.model.service.activityService;
+package com.example.model.service.AdminService.activityService;
 
 import com.example.model.dao.ActivityDao;
-import com.example.model.dao.impl.JDBCActivityDao;
-import com.example.model.dao.impl.JDBCCategoryDao;
 import com.example.model.dao.impl.JDBCDaoFactory;
 
 public class DeleteActivityService {

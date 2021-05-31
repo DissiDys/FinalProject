@@ -20,7 +20,6 @@
 <body>
 <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp">back</a>
 <h2><fmt:message key="activities" bundle="${bundle}"/></h2>
-
 <form method="post" action="${pageContext.request.contextPath}/app/addActivity">
     <input required type="text" id="name" name="name" autocomplete="off">
 
@@ -32,7 +31,6 @@
 
     <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
 </form>
-
 <form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
     <select required name="sort">
@@ -70,23 +68,7 @@
         </tr>
     </c:forEach>
 </table>
-<script>
-    var main = document.querySelector('#checkboxes [type="checkbox"]'),
-        all = document.querySelectorAll('#checkboxes > [type="checkbox"]');
-
-    for (var i = 0; i < all.length; i++) {  // 1 и 2 пункт задачи
-        all[i].onclick = function () {
-            var allChecked = document.querySelectorAll('#checkboxes > [type="checkbox"]:checked').length;
-            main.checked = allChecked == all.length;
-            main.indeterminate = allChecked > 0 && allChecked < all.length;
-        }
-    }
-
-    main.onclick = function () {  // 3
-        for (var i = 0; i < all.length; i++) {
-            all[i].checked = this.checked;
-        }
-    }
-</script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/view/js/CheckAllFilter.js"></script>
 </body>
 </html>

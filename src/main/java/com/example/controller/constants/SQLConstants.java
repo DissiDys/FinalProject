@@ -19,4 +19,8 @@ public class SQLConstants {
     public static final String FIND_USERS_ACTIVITIES = "SELECT * FROM mydb.user_has_activity " +
             "INNER JOIN activity ON activity.id = user_has_activity.activity_id " +
             "INNER JOIN category ON activity.category_id = category.id WHERE user_id = ";
+
+    public static final String FIND_TIME_SPENT = "SELECT * FROM user_has_activity WHERE user_id = ? AND activity_id = ? ;";
+    public static final String SET_TIME_SPENT = "UPDATE user_has_activity SET time_spent = ? WHERE user_id = ? AND activity_id = ? ;";
+    public static final String SEND_REQUEST_TO_ADD_ACTIVITY = "INSERT INTO unconfirmed_activities (user_id, activity_id) VALUES (?, ?);";
 }

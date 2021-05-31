@@ -1,24 +1,20 @@
-import com.example.model.dao.UserDao;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.impl.JDBCDaoFactory;
 import com.example.model.entity.Activity;
 import com.example.model.entity.Category;
 import com.example.model.entity.User;
-import com.example.model.service.activityService.ActivitiesListService;
 
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.sql.Time;
 
 
 public class Demo {
     public static void main(String[] args) throws NotUniqueInsertionException {
-        UserDao dao = JDBCDaoFactory.getInstance().createUserDao();
         User user = User.createUser("Roman", "Roman1");
-        user.setId(2);
+        Activity activity = Activity.createActivity("1", Category.createCategory("Learning"));
 
-        for (Activity a:dao.findUsersActivities(user)) {
-            System.out.println(a.getName());
-        }
+        user.setId(2);
+        activity.setId(8);
+        JDBCDaoFactory.getInstance().createUserDao().setActivitySpentTime(user, activity, new Time(12341));
+        System.out.println(JDBCDaoFactory.getInstance().createUserDao().getActivitySpentTime(user, activity));
     }
 }

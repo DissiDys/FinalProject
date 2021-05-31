@@ -1,8 +1,8 @@
-package com.example.controller.command.AdminCommands.activityCommand;
+package com.example.controller.command.adminCommands.activityCommand;
 
 import com.example.controller.command.Command;
-import com.example.model.service.activityService.ActivitiesListService;
-import com.example.model.service.categoryServices.CategoriesListService;
+import com.example.model.service.AdminService.activityService.ActivitiesListService;
+import com.example.model.service.AdminService.categoryServices.CategoriesListService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

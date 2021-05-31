@@ -46,6 +46,7 @@ public class JDBCUserDao implements UserDao {
         return res;
     }
 
+    @Override
     public void setActivityForUser(User user, Activity activity) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_ACTIVITY_FOR_USER)) {
             connection.setAutoCommit(false);
@@ -98,6 +99,50 @@ public class JDBCUserDao implements UserDao {
         }
 
         return activities;
+    }
+
+    @Override
+    public Time getActivitySpentTime(User user, Activity activity) {
+        Time time = null;
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_TIME_SPENT);
+            pstmt.setString(1, String.valueOf(user.getId()));
+            pstmt.setString(2, String.valueOf(activity.getId()));
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if (resultSet.next()) {
+                time = resultSet.getTime("time_spent");
+            }
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return time;
+    }
+
+    @Override
+    public void setActivitySpentTime(User user, Activity activity, Time time) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_TIME_SPENT)) {
+            pstmt.setString(1, String.valueOf(time));
+            pstmt.setString(2, String.valueOf(user.getId()));
+            pstmt.setString(3, String.valueOf(activity.getId()));
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public void sendRequestToAddActivity(User user, Activity activity) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SEND_REQUEST_TO_ADD_ACTIVITY)) {
+            pstmt.setString(1, String.valueOf(user.getId()));
+            pstmt.setString(2, String.valueOf(activity.getId()));
+            pstmt.executeUpdate();
+            logger.info("request to add activity with id " + activity.getId() + " for user with id " + user.getId());
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
     }
 
     @Override

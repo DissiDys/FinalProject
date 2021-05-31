@@ -2,10 +2,13 @@ package com.example.controller.util;
 
 import com.example.model.entity.Activity;
 import com.example.model.entity.Category;
-import com.example.model.service.activityService.ActivitiesListService;
-import com.example.model.service.categoryServices.CategoriesListService;
+import com.example.model.entity.User;
+import com.example.model.service.AdminService.activityService.ActivitiesListService;
+import com.example.model.service.AdminService.categoryServices.CategoriesListService;
+import com.example.model.service.UserService.UserActivitiesListService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +16,15 @@ import java.util.stream.Collectors;
 public class ActivitiesUtil {
     public static void sort(HttpServletRequest request) {
         String sortingMethod = request.getParameter("sort");
-        List<Activity> sortedActivityList = ActivitiesListService.getActivitiesList();
+        User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
+        List<Activity> sortedActivityList = new ArrayList<>();
+        if (role.name().equals("ADMIN")) {
+            sortedActivityList = ActivitiesListService.getActivitiesList();
+        }
+        if (role.name().equals("USER")){
+            User user = (User) request.getSession().getAttribute("user");
+            sortedActivityList = UserActivitiesListService.getUserActivitiesList(user);
+        }
 
         switch (sortingMethod) {
             case "name":
@@ -31,7 +42,15 @@ public class ActivitiesUtil {
     }
 
     public static void filter(HttpServletRequest request) {
-        List<Activity> activityList = ActivitiesListService.getActivitiesList();
+        User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
+        List<Activity> activityList = new ArrayList<>();
+        if (role.name().equals("ADMIN")) {
+            activityList = ActivitiesListService.getActivitiesList();
+        }
+        if (role.name().equals("USER")){
+            User user = (User) request.getSession().getAttribute("user");
+            activityList = UserActivitiesListService.getUserActivitiesList(user);
+        }
 
         for (Category category : CategoriesListService.getCategoriesList()) {
            if (request.getParameter(category.getName()) == null){
