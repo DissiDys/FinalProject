@@ -3,9 +3,7 @@ package com.example.controller.command.adminCommands.activityCommand;
 import com.example.controller.command.Command;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
-import com.example.model.service.AdminService.activityService.AcceptActivityService;
-import com.example.model.service.AdminService.activityService.ActivitiesListService;
-import com.example.model.service.AdminService.userServices.UsersListService;
+import com.example.model.service.AdminService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +15,13 @@ public class AcceptActivityForUser implements Command {
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         int activity_id = Integer.parseInt(request.getParameter("activity_id"));
 
-        User user = UsersListService.getUserByID(user_id);
-        Activity activity = ActivitiesListService.getActivityByID(activity_id);
+        User user = AdminService.getUserByID(user_id);
+        Activity activity = AdminService.getActivityByID(activity_id);
 
         if (request.getParameter("accept").equals("true")){
-            AcceptActivityService.acceptActivity(user, activity);
+            AdminService.acceptActivity(user, activity);
         } else {
-            AcceptActivityService.deleteActivity(user, activity);
+            AdminService.dontAcceptActivity(user, activity);
         }
 
         return "/app/unconfirmedActivitiesList";

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -20,7 +20,7 @@
 <body>
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout" bundle="${bundle}"/></a>
 <form method="post" action="${pageContext.request.contextPath}/app/sendAddActivityRequestToAdmin">
-    <select required name="activity">
+    <select required name="activity_id">
         <c:forEach items="${pageContext.request.getAttribute('allActivitiesList')}" var="activity" varStatus="status">
             <option value="${activity.id}">${activity.name}, ${activity.category.name}</option>
         </c:forEach>
@@ -65,6 +65,10 @@
                     <input type="text" name="activity_id" hidden value="${activity.id}">
                     <input type="submit" value="<fmt:message key="send" bundle="${bundle}"/>">
                 </form>
+                <hr/>
+            </td>
+            <td><a href="${pageContext.request.contextPath}/app/deleteUserActivity?activity_id=${activity.id}"><fmt:message
+                    key="delete" bundle="${bundle}"/></a>
                 <hr/>
             </td>
         </tr>

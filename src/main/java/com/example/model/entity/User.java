@@ -7,16 +7,6 @@ public class User {
 
     public enum ROLE {
         USER, ADMIN, GUEST;
-
-        public static String getStringValue(ROLE role) {
-            switch (role) {
-                case ADMIN:
-                    return "admin";
-                case USER:
-                    return "user";
-            }
-            return "unknown";
-        }
     }
 
     private User(String login, String password) {

@@ -2,7 +2,7 @@ package com.example.controller.command;
 
 import com.example.model.entity.User;
 import com.example.controller.constants.Path;
-import com.example.model.service.LoginService;
+import com.example.model.service.GuestService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class Login implements Command {
         }
 
         User user = User.createUser(login, password);
-        if (LoginService.DBContainsUser(user)) {
+        if (GuestService.DBContainsUser(user)) {
             if (CommandUtility.checkUserIsLogged(request.getSession(), user)) {
                 request.setAttribute("user_already_logged", true);
                 logger.error("User with login " + login + " already logged");

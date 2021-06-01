@@ -6,6 +6,7 @@ import com.example.controller.command.adminCommands.categoriesCommand.*;
 import com.example.controller.command.adminCommands.userManageCommand.DeleteUser;
 import com.example.controller.command.adminCommands.userManageCommand.UserList;
 import com.example.controller.command.userCommands.AddTime;
+import com.example.controller.command.userCommands.DeleteActivityForUser;
 import com.example.controller.command.userCommands.SendRequestToAddActivity;
 import com.example.controller.command.userCommands.UserActivities;
 import org.apache.log4j.LogManager;
@@ -40,6 +41,7 @@ public class Controller extends HttpServlet {
         commands.put("sendAddActivityRequestToAdmin", new SendRequestToAddActivity());
         commands.put("acceptActivityForUser", new AcceptActivityForUser());
         commands.put("unconfirmedActivitiesList", new UnconfirmedActivitiesList());
+        commands.put("deleteUserActivity", new DeleteActivityForUser());
     }
 
     @Override

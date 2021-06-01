@@ -3,7 +3,7 @@ package com.example.controller.command;
 import com.example.controller.constants.Path;
 import com.example.controller.util.ValidationUtil;
 import com.example.model.dao.exception.NotUniqueInsertionException;
-import com.example.model.service.RegistrationService;
+import com.example.model.service.GuestService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -23,7 +23,7 @@ public class Reg implements Command {
             return Path.REGISTRATION;
         }
         try {
-            RegistrationService.regNewUser(login, password);
+            GuestService.regNewUser(login, password);
         } catch (NotUniqueInsertionException e) {
             logger.info("Not unique login ( login: " + login + " )");
             request.setAttribute("not_unique_login", true);

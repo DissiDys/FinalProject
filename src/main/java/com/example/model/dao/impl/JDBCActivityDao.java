@@ -26,7 +26,7 @@ public class JDBCActivityDao implements ActivityDao {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.ADD_NEW_ACTIVITY, Statement.RETURN_GENERATED_KEYS)) {
             int i = 1;
             pstmt.setString(i++, activity.getName());
-            if (activity.getCategory() != null){
+            if (activity.getCategory() != null) {
                 try {
                     JDBCDaoFactory.getInstance().createCategoryDao().create(activity.getCategory());
                 } catch (NotUniqueInsertionException e) {
@@ -67,7 +67,10 @@ public class JDBCActivityDao implements ActivityDao {
         ) {
             ActivityMapper activityMapper = new ActivityMapper();
             while (resultSet.next()) {
-                activities.add(activityMapper.extractFromResultSet(resultSet));
+                Activity activity = activityMapper.extractFromResultSet(resultSet);
+                if (activity != null) {
+                    activities.add(activity);
+                }
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);

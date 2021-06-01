@@ -22,10 +22,11 @@ public class SQLConstants {
 
     public static final String FIND_TIME_SPENT = "SELECT * FROM user_has_activity WHERE user_id = ? AND activity_id = ? ;";
     public static final String SET_TIME_SPENT = "UPDATE user_has_activity SET time_spent = ? WHERE user_id = ? AND activity_id = ? ;";
-    public static final String SET_UNCONFIRMED_ACTIVITY_FOR_USER = "INSERT INTO unconfirmed_activities (user_id, activity_id) VALUES (?, ?);";
+    public static final String SET_UNCONFIRMED_ACTIVITY_FOR_USER = "INSERT INTO unconfirmed_activities (user_id, activity_id, operation) VALUES (?, ?, ?);";
     public static final String FIND_UNCONFIRMED_ACTIVITIES_FOR_USER =
             "SELECT * FROM unconfirmed_activities INNER JOIN activity ON activity.id = unconfirmed_activities.activity_id \n" +
             "INNER JOIN category ON category_id = category.id\n" +
             "WHERE user_id = ?;";
     public static final String DELETE_UNCONFIRMED_ACTIVITY_FOR_USER = "DELETE FROM unconfirmed_activities WHERE user_id = (?) AND activity_id = (?);";
+    public static final String DELETE_ACTIVITY_FOR_USER = "DELETE FROM user_has_activity WHERE user_id = (?) AND activity_id = (?);";
 }

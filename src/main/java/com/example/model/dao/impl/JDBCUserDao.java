@@ -9,6 +9,7 @@ import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.controller.constants.SQLConstants;
 
+import com.example.model.entity.enums.Operation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -82,6 +83,18 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
+    public void deleteActivityForUser(User user, Activity activity) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_ACTIVITY_FOR_USER)) {
+            pstmt.setString(1, String.valueOf(user.getId()));
+            pstmt.setString(2, String.valueOf(activity.getId()));
+            pstmt.executeUpdate();
+            logger.info("was deleted unconfirmed activity with id " + activity.getId() + " for user with id " + user.getId());
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+    }
+
+    @Override
     public List<Activity> findUsersActivities(User user) {
         List<Activity> activities = new ArrayList<>();
 
@@ -134,10 +147,11 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void setUnconfirmedActivityForUser(User user, Activity activity) {
+    public void setUnconfirmedActivityForUser(User user, Activity activity, Operation operation) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_UNCONFIRMED_ACTIVITY_FOR_USER)) {
             pstmt.setString(1, String.valueOf(user.getId()));
             pstmt.setString(2, String.valueOf(activity.getId()));
+            pstmt.setString(3, operation.toString());
             pstmt.executeUpdate();
             logger.info("request to add activity with id " + activity.getId() + " for user with id " + user.getId());
         } catch (SQLException ex) {
@@ -173,6 +187,26 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
+    }
+
+    @Override
+    public Operation getOperationForUserUnconfirmedActivity(User user, Activity activity) {
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_UNCONFIRMED_ACTIVITIES_FOR_USER);
+
+        ) {
+            pstmt.setString(1, String.valueOf(user.getId()));
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()){
+                if (resultSet.getLong("activity_id") == activity.getId()){
+                    return Operation.valueOf(resultSet.getString("operation"));
+                }
+            }
+
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return null;
     }
 
 

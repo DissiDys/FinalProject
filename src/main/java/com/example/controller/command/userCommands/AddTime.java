@@ -3,9 +3,8 @@ package com.example.controller.command.userCommands;
 import com.example.controller.command.Command;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
-import com.example.model.service.AdminService.activityService.ActivitiesListService;
-import com.example.model.service.UserService.GetSpentTimeByActivityService;
-import com.example.model.service.UserService.SetSpentTimeOnActivityService;
+import com.example.model.service.AdminService;
+import com.example.model.service.UserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,10 +23,10 @@ public class AddTime implements Command {
         try {
             User user = (User) request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("activity_id"));
-            Activity activity = ActivitiesListService.getActivityByID(id);
-            Time tempTime = new Time(format.parse(GetSpentTimeByActivityService.getTimeByActivity(user, activity) + ":00").getTime());
+            Activity activity = AdminService.getActivityByID(id);
+            Time tempTime = new Time(format.parse(UserService.getTimeByActivity(user, activity) + ":00").getTime());
             Time time = new Time(format.parse(request.getParameter("time") + ":00").getTime() + tempTime.getTime() + 10800000);
-            SetSpentTimeOnActivityService.setSpentTime(user, activity, time);
+            UserService.setSpentTime(user, activity, time);
         } catch (ParseException e) {
             logger.error(e.getMessage(), e);
         }

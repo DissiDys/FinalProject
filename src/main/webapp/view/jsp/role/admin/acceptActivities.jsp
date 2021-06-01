@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -23,12 +23,17 @@
 
 <table>
     <tr>
+        <th><fmt:message key="operation" bundle="${bundle}"/></th>
         <th><fmt:message key="login" bundle="${bundle}"/></th>
         <th><fmt:message key="activities" bundle="${bundle}"/></th>
     </tr>
     <c:forEach items="${pageContext.request.getAttribute('usersList')}" var="user" varStatus="status">
         <c:forEach items="${pageContext.request.getAttribute('activitiesList'.concat(user.login))}" var="activity" varStatus="status">
+            <c:set value="${pageContext.request.getAttribute('operation'.concat(user.login).concat(activity.name))}" var="operation"/>
             <tr>
+                <td>${operation}
+                    <hr/>
+                </td>
                 <td>${user.login}
                     <hr/>
                 </td>
@@ -42,7 +47,7 @@
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/app/acceptActivityForUser?user_id=${user.id}&activity_id=${activity.id}&accept=false"><fmt:message
-                            key="delete" bundle="${bundle}"/></a>
+                            key="dont_accept" bundle="${bundle}"/></a>
                     <hr/>
                 </td>
             </tr>

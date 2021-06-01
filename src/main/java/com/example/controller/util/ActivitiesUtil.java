@@ -3,10 +3,8 @@ package com.example.controller.util;
 import com.example.model.entity.Activity;
 import com.example.model.entity.Category;
 import com.example.model.entity.User;
-import com.example.model.service.AdminService.activityService.ActivitiesListService;
-import com.example.model.service.AdminService.categoryServices.CategoriesListService;
-import com.example.model.service.UserService.UserActivitiesListService;
-
+import com.example.model.service.AdminService;
+import com.example.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,14 +34,14 @@ public class ActivitiesUtil {
         User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
         List<Activity> activityList = new ArrayList<>();
         if (role.name().equals("ADMIN")) {
-            activityList = ActivitiesListService.getActivitiesList();
+            activityList = AdminService.getActivitiesList();
         }
         if (role.name().equals("USER")){
             User user = (User) request.getSession().getAttribute("user");
-            activityList = UserActivitiesListService.getUserActivitiesList(user);
+            activityList = UserService.getUserActivitiesList(user);
         }
 
-        for (Category category : CategoriesListService.getCategoriesList()) {
+        for (Category category : AdminService.getCategoriesList()) {
            if (request.getParameter(category.getName()) == null){
                activityList = activityList.stream()
                        .filter(activity -> !activity.getCategory().getName().equals(category.getName()))
