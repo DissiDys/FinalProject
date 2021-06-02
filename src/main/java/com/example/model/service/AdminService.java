@@ -31,16 +31,18 @@ public class AdminService {
         }
     }
 
-    public static List<Activity> getActivitiesList(){
+    public static List<Activity> getActivitiesList() {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             return dao.findAll();
         }
     }
-    public static Activity getActivityByID(int id){
+
+    public static Activity getActivityByID(int id) {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             return dao.findById(id);
         }
     }
+
     public static void addActivity(Activity activity) throws NotUniqueInsertionException {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             dao.create(activity);
@@ -60,7 +62,7 @@ public class AdminService {
     }
 
     public static List<Activity> getUnconfirmedActivitiesForUser(User user) {
-        try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()){
+        try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
             return dao.getUnconfirmedActivitiesForUser(user);
         }
     }
@@ -72,7 +74,7 @@ public class AdminService {
         }
     }
 
-    public static List<Category> getCategoriesList(){
+    public static List<Category> getCategoriesList() {
         try (CategoryDao dao = JDBCDaoFactory.getInstance().createCategoryDao()) {
             return dao.findAll();
         }
@@ -84,7 +86,7 @@ public class AdminService {
         }
     }
 
-    public static void deleteUser(int id){
+    public static void deleteUser(int id) {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
             dao.delete(id);
         }
@@ -101,9 +103,22 @@ public class AdminService {
             return dao.findById(id);
         }
     }
-    public static Operation getOperationForUserUnconfirmedActivity(User user, Activity activity){
+
+    public static Operation getOperationForUserUnconfirmedActivity(User user, Activity activity) {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
             return dao.getOperationForUserUnconfirmedActivity(user, activity);
         }
+    }
+
+    public static int getAmountOfUsersOnActivity(Activity activity) {
+        int amountOfUsers = 0;
+        for (User user : AdminService.getUsersList()) {
+            for (Activity userActivity : UserService.getUserActivitiesList(user)) {
+                if (userActivity.getName().equals(activity.getName())) {
+                    amountOfUsers++;
+                }
+            }
+        }
+        return amountOfUsers;
     }
 }

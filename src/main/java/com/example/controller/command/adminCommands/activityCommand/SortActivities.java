@@ -15,7 +15,7 @@ public class SortActivities implements Command {
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
         ActivitiesUtil.filter(request);
-        ActivitiesUtil.sort(request, (List<Activity>) request.getAttribute("activitiesList"));
+        ActivitiesUtil.sort(request);
         if (role.name().equals("ADMIN")) {
             return "/app/activities";
         }

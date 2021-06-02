@@ -30,7 +30,7 @@
     <br/>
     <br/>
     <form method="post" action="${pageContext.request.contextPath}/app/sendAddActivityRequestToAdmin">
-        <select required name="activity_id">
+        <select name="activity_id">
             <c:forEach items="${pageContext.request.getAttribute('allActivitiesList')}" var="activity"
                        varStatus="status">
                 <option value="${activity.id}">${activity.name}, ${activity.category.name}</option>
@@ -41,7 +41,7 @@
 </div>
 <form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
-    <select required name="sort">
+    <select name="sort">
         <option value="name"><fmt:message key="by_name" bundle="${bundle}"/></option>
         <option value="category"><fmt:message key="by_category" bundle="${bundle}"/></option>
     </select>

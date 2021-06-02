@@ -32,7 +32,7 @@
     <form method="post" action="${pageContext.request.contextPath}/app/addActivity">
         <input required type="text" id="name" name="name" autocomplete="off">
 
-        <select required name="category">
+        <select required name="category_id">
             <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
                 <option value="${category.id}">${category.name}</option>
             </c:forEach>
@@ -63,14 +63,18 @@
     <tr>
         <th><fmt:message key="name" bundle="${bundle}"/></th>
         <th><fmt:message key="category" bundle="${bundle}"/></th>
+        <th><fmt:message key="amount_of_users" bundle="${bundle}"/></th>
         <th></th>
     </tr>
     </thead>
     <c:forEach items="${pageContext.request.getAttribute('activitiesList')}" var="activity" varStatus="status">
+        <c:set value="${pageContext.request.getAttribute('amountOfUsers'.concat(activity.name))}"
+               var="amountOfUsers"/>
         <tbody>
         <tr>
             <td>${activity.name}</td>
             <td>${activity.category.name}</td>
+            <td>${amountOfUsers}</td>
             <td><a href="${pageContext.request.contextPath}/app/deleteActivity?activity_id=${activity.id}"><fmt:message
                     key="delete" bundle="${bundle}"/></a></td>
         </tr>

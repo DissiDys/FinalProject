@@ -1,5 +1,5 @@
 body {
-    background: white;
+    background: #bdc7c9;
     font-family: Arial, serif;
     padding: 20px;
 }
@@ -59,7 +59,7 @@ a {
 }
 .table {
     width: 100%;
-    border: none;
+    border: white;
     margin-bottom: 20px;
 }
 .table thead th {
@@ -87,5 +87,5 @@ a {
     border-right: none;
 }
 .table tbody tr:nth-child(even){
-    background: #f3f3f3;
+    background: white;
 }

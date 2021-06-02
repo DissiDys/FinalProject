@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ActivitiesUtil {
-    public static void sort(HttpServletRequest request, List<Activity> sortedActivityList) {
+    public static void sort(HttpServletRequest request) {
         String sortingMethod = request.getParameter("sort");
-
+        List<Activity> sortedActivityList = (List<Activity>) request.getAttribute("activitiesList");
         switch (sortingMethod) {
             case "name":
                 sortedActivityList.sort(Comparator.comparing(Activity::getName));
@@ -22,8 +22,8 @@ public class ActivitiesUtil {
             case "category":
                 sortedActivityList.sort(Comparator.comparing(o -> o.getCategory().getName()));
                 break;
-            case "user":
-                //TODO sorting by users
+            case "users":
+                sortedActivityList.sort(Comparator.comparing(AdminService::getAmountOfUsersOnActivity));
                 break;
         }
 
