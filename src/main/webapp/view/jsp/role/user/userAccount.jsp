@@ -5,28 +5,40 @@
 <fmt:setLocale value='${pageContext.request.getSession(false).getAttribute("lang")}'/>
 <fmt:setBundle basename="translate" var="bundle"/>
 
-<c:url value="" var="EnLang">
+<c:url value="/app/userActivities" var="EnLang">
     <c:param name="lang" value="en"/>
 </c:url>
 
-<c:url value="" var="UkrLang">
+<c:url value="/app/userActivities" var="UkrLang">
     <c:param name="lang" value="ukr"/>
 </c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/css/userAccount.css">
     <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
     <title><fmt:message key="activities" bundle="${bundle}"/></title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout" bundle="${bundle}"/></a>
-<form method="post" action="${pageContext.request.contextPath}/app/sendAddActivityRequestToAdmin">
-    <select required name="activity_id">
-        <c:forEach items="${pageContext.request.getAttribute('allActivitiesList')}" var="activity" varStatus="status">
-            <option value="${activity.id}">${activity.name}, ${activity.category.name}</option>
-        </c:forEach>
-    </select>
-    <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
-</form>
+<div>
+    <a href="${pageContext.request.contextPath}/app/logout" class="logout"><fmt:message key="logout"
+                                                                                        bundle="${bundle}"/></a>
+    <a href="${EnLang}" class="localizationEN">EN</a>
+    <a href="${UkrLang}" class="localizationUA">UKR</a>
+</div>
+<div>
+    <br/>
+    <br/>
+    <br/>
+    <form method="post" action="${pageContext.request.contextPath}/app/sendAddActivityRequestToAdmin">
+        <select required name="activity_id">
+            <c:forEach items="${pageContext.request.getAttribute('allActivitiesList')}" var="activity"
+                       varStatus="status">
+                <option value="${activity.id}">${activity.name}, ${activity.category.name}</option>
+            </c:forEach>
+        </select>
+        <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
+    </form>
+</div>
 <form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
     <select required name="sort">
@@ -44,34 +56,31 @@
     <input type="submit" value="<fmt:message key="accept" bundle="${bundle}"/>">
 </form>
 <h2><fmt:message key="activities" bundle="${bundle}"/></h2>
-<table>
+<table class="table">
+    <thead>
     <tr>
         <th><fmt:message key="name" bundle="${bundle}"/></th>
         <th><fmt:message key="category" bundle="${bundle}"/></th>
         <th><fmt:message key="time_spent" bundle="${bundle}"/></th>
+        <th></th>
     </tr>
+    </thead>
     <c:forEach items="${pageContext.request.getAttribute('activitiesList')}" var="activity" varStatus="status">
-        <tr>
-            <td>${activity.name}
-                <hr/>
-            </td>
-            <td>${activity.category.name}
-                <hr/>
-            </td>
-            <td>
-                ${pageContext.request.getAttribute("timeSpent".concat(activity.name))}
-                <form action="${pageContext.request.contextPath}/app/addTime">
-                    <input type="time" name="time">
-                    <input type="text" name="activity_id" hidden value="${activity.id}">
-                    <input type="submit" value="<fmt:message key="send" bundle="${bundle}"/>">
-                </form>
-                <hr/>
-            </td>
-            <td><a href="${pageContext.request.contextPath}/app/deleteUserActivity?activity_id=${activity.id}"><fmt:message
-                    key="delete" bundle="${bundle}"/></a>
-                <hr/>
-            </td>
+        <tbody>
+        <td>${activity.name}</td>
+        <td>${activity.category.name}</td>
+        <td>${pageContext.request.getAttribute("timeSpent".concat(activity.name))}
+            <form action="${pageContext.request.contextPath}/app/addTime">
+                <input type="time" name="time">
+                <input type="text" name="activity_id" hidden value="${activity.id}">
+                <input type="submit" value="<fmt:message key="send" bundle="${bundle}"/>">
+            </form>
+        </td>
+        <td><a href="${pageContext.request.contextPath}/app/deleteUserActivity?activity_id=${activity.id}"><fmt:message
+                key="delete" bundle="${bundle}"/></a>
+        </td>
         </tr>
+        </tbody>
     </c:forEach>
 </table>
 <script type="text/javascript"

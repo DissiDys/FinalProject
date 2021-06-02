@@ -5,32 +5,42 @@
 <fmt:setLocale value='${pageContext.request.getSession(false).getAttribute("lang")}'/>
 <fmt:setBundle basename="translate" var="bundle"/>
 
-<c:url value="" var="EnLang">
+<c:url value="/app/activities" var="EnLang">
     <c:param name="lang" value="en"/>
 </c:url>
 
-<c:url value="" var="UkrLang">
+<c:url value="/app/activities" var="UkrLang">
     <c:param name="lang" value="ukr"/>
 </c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/css/adminAccount.css">
     <title><fmt:message key="activities" bundle="${bundle}"/></title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp">back</a>
-<h2><fmt:message key="activities" bundle="${bundle}"/></h2>
-<form method="post" action="${pageContext.request.contextPath}/app/addActivity">
-    <input required type="text" id="name" name="name" autocomplete="off">
+<div>
+    <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message
+            key="back" bundle="${bundle}"/></a>
+    <a href="${EnLang}" class="localizationEN">EN</a>
+    <a href="${UkrLang}" class="localizationUA">UKR</a>
+</div>
+<div>
+    <br/>
+    <br/>
+    <br/>
+    <form method="post" action="${pageContext.request.contextPath}/app/addActivity">
+        <input required type="text" id="name" name="name" autocomplete="off">
 
-    <select required name="category">
-        <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
-            <option value="${category.id}">${category.name}</option>
-        </c:forEach>
-    </select>
+        <select required name="category">
+            <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
+                <option value="${category.id}">${category.name}</option>
+            </c:forEach>
+        </select>
 
-    <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
-</form>
+        <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
+    </form>
+</div>
 <form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
     <select required name="sort">
@@ -48,24 +58,23 @@
     </div>
     <input type="submit" value="<fmt:message key="accept" bundle="${bundle}"/>">
 </form>
-<table>
+<table class="table">
+    <thead>
     <tr>
         <th><fmt:message key="name" bundle="${bundle}"/></th>
         <th><fmt:message key="category" bundle="${bundle}"/></th>
+        <th></th>
     </tr>
+    </thead>
     <c:forEach items="${pageContext.request.getAttribute('activitiesList')}" var="activity" varStatus="status">
+        <tbody>
         <tr>
-            <td>${activity.name}
-                <hr/>
-            </td>
-            <td>${activity.category.name}
-                <hr/>
-            </td>
+            <td>${activity.name}</td>
+            <td>${activity.category.name}</td>
             <td><a href="${pageContext.request.contextPath}/app/deleteActivity?activity_id=${activity.id}"><fmt:message
-                    key="delete" bundle="${bundle}"/></a>
-                <hr/>
-            </td>
+                    key="delete" bundle="${bundle}"/></a></td>
         </tr>
+        </tbody>
     </c:forEach>
 </table>
 <script type="text/javascript"
