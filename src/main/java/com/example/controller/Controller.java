@@ -7,8 +7,11 @@ import com.example.controller.command.adminCommands.userManageCommand.DeleteUser
 import com.example.controller.command.adminCommands.userManageCommand.UserList;
 import com.example.controller.command.userCommands.AddTime;
 import com.example.controller.command.userCommands.DeleteActivityForUser;
-import com.example.controller.command.userCommands.SendRequestToAddActivity;
+import com.example.controller.command.userCommands.AddActivityForUser;
 import com.example.controller.command.userCommands.UserActivities;
+import com.example.model.service.AdminService;
+import com.example.model.service.GuestService;
+import com.example.model.service.UserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -25,23 +28,23 @@ public class Controller extends HttpServlet {
 
     public void init() {
         commands.put("logout", new LogOut());
-        commands.put("login", new Login());
-        commands.put("registration", new Reg());
-        commands.put("usersList", new UserList());
-        commands.put("deleteUser", new DeleteUser());
-        commands.put("activitiesCategories", new ActivitiesCategories());
-        commands.put("deleteCategory", new DeleteCategory());
-        commands.put("addCategory", new AddCategory());
-        commands.put("activities", new ActivitiesList());
-        commands.put("deleteActivity", new DeleteActivity());
-        commands.put("addActivity", new AddActivity());
+        commands.put("login", new Login(new GuestService()));
+        commands.put("registration", new Reg(new GuestService()));
+        commands.put("usersList", new UserList(new AdminService()));
+        commands.put("deleteUser", new DeleteUser(new AdminService()));
+        commands.put("activitiesCategories", new ActivitiesCategories(new AdminService()));
+        commands.put("deleteCategory", new DeleteCategory(new AdminService()));
+        commands.put("addCategory", new AddCategory(new AdminService()));
+        commands.put("activities", new ActivitiesList(new AdminService()));
+        commands.put("deleteActivity", new DeleteActivity(new AdminService()));
+        commands.put("addActivity", new AddActivity(new AdminService()));
         commands.put("sortActivities", new SortActivities());
-        commands.put("userActivities", new UserActivities());
-        commands.put("addTime", new AddTime());
-        commands.put("sendAddActivityRequestToAdmin", new SendRequestToAddActivity());
-        commands.put("acceptActivityForUser", new AcceptActivityForUser());
-        commands.put("unconfirmedActivitiesList", new UnconfirmedActivitiesList());
-        commands.put("deleteUserActivity", new DeleteActivityForUser());
+        commands.put("userActivities", new UserActivities(new AdminService(), new UserService()));
+        commands.put("addTime", new AddTime(new AdminService(), new UserService()));
+        commands.put("sendAddActivityRequestToAdmin", new AddActivityForUser(new AdminService(), new UserService()));
+        commands.put("acceptActivityForUser", new AcceptActivityForUser(new AdminService()));
+        commands.put("unconfirmedActivitiesList", new UnconfirmedActivitiesList(new AdminService()));
+        commands.put("deleteUserActivity", new DeleteActivityForUser(new AdminService(), new UserService()));
     }
 
     @Override

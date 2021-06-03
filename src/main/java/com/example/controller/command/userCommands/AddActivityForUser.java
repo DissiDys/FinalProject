@@ -11,16 +11,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class SendRequestToAddActivity implements Command {
+public class AddActivityForUser implements Command {
+    AdminService adminService;
+    UserService userService;
+
+    public AddActivityForUser(AdminService adminService, UserService userService) {
+        this.adminService = adminService;
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         if (request.getParameter("activity_id") == null || request.getParameter("activity_id").equals("")) {
             return "/app/userActivities";
         }
         User user = (User) request.getSession().getAttribute("user");
-        Activity activity = AdminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
-
-        UserService.sendRequest(user, activity, Operation.ADD);
+        Activity activity = adminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
+        userService.sendRequest(user, activity, Operation.ADD);
+        request.setAttribute("msg", true);
         return "/app/userActivities";
     }
 }

@@ -10,18 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class AcceptActivityForUser implements Command {
+    AdminService adminService;
+
+    public AcceptActivityForUser(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         int activity_id = Integer.parseInt(request.getParameter("activity_id"));
 
-        User user = AdminService.getUserByID(user_id);
-        Activity activity = AdminService.getActivityByID(activity_id);
+        User user = adminService.getUserByID(user_id);
+        Activity activity = adminService.getActivityByID(activity_id);
 
         if (request.getParameter("accept").equals("true")){
-            AdminService.acceptActivity(user, activity);
+            adminService.acceptActivity(user, activity);
         } else {
-            AdminService.dontAcceptActivity(user, activity);
+            adminService.dontAcceptActivity(user, activity);
         }
 
         return "/app/unconfirmedActivitiesList";

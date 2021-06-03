@@ -15,16 +15,22 @@ import java.io.IOException;
 public class AddActivity implements Command {
     private final Logger logger = LogManager.getLogger(AddActivity.class);
 
+    AdminService adminService;
+
+    public AddActivity(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         if (request.getParameter("category_id") == null || request.getParameter("category_id").equals("")
                 || request.getParameter("name") == null || request.getParameter("name").equals("")) {
             return "/app/activities";
         }
-        Category category = AdminService.findCategoryById(Integer.parseInt(request.getParameter("category_id")));
+        Category category = adminService.findCategoryById(Integer.parseInt(request.getParameter("category_id")));
         Activity activity = Activity.createActivity(request.getParameter("name"), category);
         try {
-            AdminService.addActivity(activity);
+            adminService.addActivity(activity);
         } catch (NotUniqueInsertionException e) {
             logger.error("Those activity already exist, name: " + activity.getName());
         }

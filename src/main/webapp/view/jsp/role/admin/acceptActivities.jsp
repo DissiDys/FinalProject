@@ -21,8 +21,6 @@
 <body>
 <div>
     <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message key="back" bundle="${bundle}"/></a>
-    <a href="${EnLang}" class="localizationEN">EN</a>
-    <a href="${UkrLang}" class="localizationUA">UKR</a>
 </div>
 <br/>
 <br/>

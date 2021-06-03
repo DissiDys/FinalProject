@@ -9,15 +9,21 @@ import java.io.IOException;
 import java.util.List;
 
 public class ActivitiesList implements Command {
+    AdminService adminService;
+
+    public ActivitiesList(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         if (request.getAttribute("activitiesList") == null) {
-            request.setAttribute("activitiesList", AdminService.getActivitiesList());
+            request.setAttribute("activitiesList", adminService.getActivitiesList());
         }
         for (Activity activity : (List<Activity>) request.getAttribute("activitiesList")) {
-            request.setAttribute("amountOfUsers" + activity.getName(), AdminService.getAmountOfUsersOnActivity(activity));
+            request.setAttribute("amountOfUsers" + activity.getName(), adminService.getAmountOfUsersOnActivity(activity));
         }
-        request.setAttribute("categoriesList", AdminService.getCategoriesList());
+        request.setAttribute("categoriesList", adminService.getCategoriesList());
         return "/view/jsp/role/admin/manageActivities.jsp";
     }
 }

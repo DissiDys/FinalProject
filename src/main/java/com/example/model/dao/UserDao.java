@@ -11,8 +11,8 @@ public interface UserDao extends GenericDao<User>{
      void setActivityForUser(User user, Activity activity);
      void deleteActivityForUser(User user, Activity activity);
      List<Activity> findUsersActivities(User user);
-     Time getActivitySpentTime(User user, Activity activity);
-     void setActivitySpentTime(User user, Activity activity, Time time);
+     int getActivitySpentTime(User user, Activity activity);
+     void setActivitySpentTime(User user, Activity activity, int minutes);
      void setUnconfirmedActivityForUser(User user, Activity activity, Operation operation);
      List<Activity> getUnconfirmedActivitiesForUser(User user);
      void deleteUnconfirmedActivityForUser(User user, Activity activity);

@@ -12,17 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnconfirmedActivitiesList implements Command {
+    AdminService adminService;
+
+    public UnconfirmedActivitiesList(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         List<User> usersList = new ArrayList<>();
 
-        for (User user : AdminService.getUsersList()) {
-            List<Activity> activitiesList = AdminService.getUnconfirmedActivitiesForUser(user);
+        for (User user : adminService.getUsersList()) {
+            List<Activity> activitiesList = adminService.getUnconfirmedActivitiesForUser(user);
             if (activitiesList.size() > 0) {
                 usersList.add(user);
                 request.setAttribute("activitiesList" + user.getLogin(), activitiesList);
                 for (Activity activity : activitiesList) {
-                    String operation = AdminService.getOperationForUserUnconfirmedActivity(user, activity).toString();
+                    String operation = adminService.getOperationForUserUnconfirmedActivity(user, activity).toString();
                     request.setAttribute("operation" + user.getLogin() + activity.getName(), operation);
                 }
             }

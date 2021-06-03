@@ -7,10 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class DeleteActivity implements Command {
+    AdminService adminService;
+
+    public DeleteActivity(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("activity_id"));
-        AdminService.dontAcceptActivity(id);
+        adminService.dontAcceptActivity(id);
         return "/app/activities";
     }
 }

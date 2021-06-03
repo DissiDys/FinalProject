@@ -12,12 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class DeleteActivityForUser implements Command {
+    AdminService adminService;
+    UserService userService;
+
+    public DeleteActivityForUser(AdminService adminService, UserService userService) {
+        this.adminService = adminService;
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        Activity activity = AdminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
-        UserService.sendRequest(user, activity, Operation.DELETE);
-
+        Activity activity = adminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
+        userService.sendRequest(user, activity, Operation.DELETE);
+        request.setAttribute("msg".concat(activity.getName()), true);
         return "/app/userActivities";
     }
 }

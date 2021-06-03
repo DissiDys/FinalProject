@@ -12,7 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ActivitiesUtil {
-    public static void sort(HttpServletRequest request) {
+    AdminService adminService;
+    UserService userService;
+
+    public ActivitiesUtil(AdminService adminService, UserService userService) {
+        this.adminService = adminService;
+        this.userService = userService;
+    }
+
+    public void sort(HttpServletRequest request) {
         String sortingMethod = request.getParameter("sort");
         List<Activity> sortedActivityList = (List<Activity>) request.getAttribute("activitiesList");
         switch (sortingMethod) {
@@ -23,25 +31,25 @@ public class ActivitiesUtil {
                 sortedActivityList.sort(Comparator.comparing(o -> o.getCategory().getName()));
                 break;
             case "users":
-                sortedActivityList.sort(Comparator.comparing(AdminService::getAmountOfUsersOnActivity));
+                sortedActivityList.sort(Comparator.comparing(o -> new AdminService().getAmountOfUsersOnActivity(o)));
                 break;
         }
 
         request.setAttribute("activitiesList", sortedActivityList);
     }
 
-    public static void filter(HttpServletRequest request) {
+    public void filter(HttpServletRequest request) {
         User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
         List<Activity> activityList = new ArrayList<>();
         if (role.name().equals("ADMIN")) {
-            activityList = AdminService.getActivitiesList();
+            activityList = adminService.getActivitiesList();
         }
         if (role.name().equals("USER")){
             User user = (User) request.getSession().getAttribute("user");
-            activityList = UserService.getUserActivitiesList(user);
+            activityList = userService.getUserActivitiesList(user);
         }
 
-        for (Category category : AdminService.getCategoriesList()) {
+        for (Category category : adminService.getCategoriesList()) {
            if (request.getParameter(category.getName()) == null){
                activityList = activityList.stream()
                        .filter(activity -> !activity.getCategory().getName().equals(category.getName()))

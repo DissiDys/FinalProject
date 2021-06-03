@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 public class Login implements Command {
     private final Logger logger = LogManager.getLogger(Login.class);
 
+    GuestService guestService;
+
+    public Login(GuestService guestService) {
+        this.guestService = guestService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) {
         String login = request.getParameter("name");
@@ -21,7 +27,7 @@ public class Login implements Command {
         }
 
         User user = User.createUser(login, password);
-        if (GuestService.DBContainsUser(user)) {
+        if (guestService.DBContainsUser(user)) {
             if (CommandUtility.checkUserIsLogged(request.getSession(), user)) {
                 request.setAttribute("user_already_logged", true);
                 logger.error("User with login " + login + " already logged");

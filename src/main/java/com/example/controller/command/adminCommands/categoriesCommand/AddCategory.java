@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class AddCategory implements Command {
+    AdminService adminService;
+
+    public AddCategory(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -16,7 +22,7 @@ public class AddCategory implements Command {
             return "/app/activitiesCategories";
         }
         try {
-            AdminService.addCategory(name);
+            adminService.addCategory(name);
         } catch (NotUniqueInsertionException e) {
             System.out.println(e.getMessage());
         }

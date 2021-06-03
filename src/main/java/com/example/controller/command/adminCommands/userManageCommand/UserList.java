@@ -9,9 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class UserList implements Command {
+    AdminService adminService;
+
+    public UserList(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
-        request.setAttribute("usersList", AdminService.getUsersList());
+        request.setAttribute("usersList", adminService.getUsersList());
         return Path.MANAGE_USERS;
     }
 }

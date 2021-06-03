@@ -22,8 +22,6 @@
 <div>
     <a href="${pageContext.request.contextPath}/app/logout" class="logout"><fmt:message key="logout"
                                                                                         bundle="${bundle}"/></a>
-    <a href="${EnLang}" class="localizationEN">EN</a>
-    <a href="${UkrLang}" class="localizationUA">UKR</a>
 </div>
 <div>
     <br/>
@@ -38,8 +36,13 @@
         </select>
         <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
     </form>
+    <label style="color: green">
+        <c:if test="${pageContext.request.getAttribute('msg')}">
+            <fmt:message key="request_to_admin_sended"
+                         bundle="${bundle}"/>
+        </c:if><label/>
 </div>
-<form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
+<form method="post" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
     <select name="sort">
         <option value="name"><fmt:message key="by_name" bundle="${bundle}"/></option>
@@ -66,10 +69,13 @@
     </tr>
     </thead>
     <c:forEach items="${pageContext.request.getAttribute('activitiesList')}" var="activity" varStatus="status">
+        <c:set value="${pageContext.request.getAttribute('hoursSpent'.concat(activity.name))}" var="hours"/>
+        <c:set value="${pageContext.request.getAttribute('minutesSpent'.concat(activity.name))}" var="minutes"/>
         <tbody>
         <td>${activity.name}</td>
         <td>${activity.category.name}</td>
-        <td>${pageContext.request.getAttribute("timeSpent".concat(activity.name))}
+        <td>${hours} <fmt:message key="hours" bundle="${bundle}"/> ${minutes} <fmt:message key="minutes"
+                                                                                           bundle="${bundle}"/>
             <form action="${pageContext.request.contextPath}/app/addTime">
                 <input type="time" name="time">
                 <input type="text" name="activity_id" hidden value="${activity.id}">
@@ -79,8 +85,12 @@
         <td><a href="${pageContext.request.contextPath}/app/deleteUserActivity?activity_id=${activity.id}"><fmt:message
                 key="delete" bundle="${bundle}"/></a>
         </td>
+
         </tr>
         </tbody>
+        <c:if test="${pageContext.request.getAttribute('msg'.concat(activity.name))}">
+            <label style="color: green"><fmt:message key="request_to_admin_sended" bundle="${bundle}"/></label>
+        </c:if>
     </c:forEach>
 </table>
 <script type="text/javascript"

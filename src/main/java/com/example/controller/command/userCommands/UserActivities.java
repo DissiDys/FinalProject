@@ -10,24 +10,32 @@ import com.example.model.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 public class UserActivities implements Command {
+    AdminService adminService;
+    UserService userService;
+
+    public UserActivities(AdminService adminService, UserService userService) {
+        this.adminService = adminService;
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        List<Category> categoriesList = AdminService.getCategoriesList();
-        List<Activity> activitiesList = AdminService.getActivitiesList();
+        List<Category> categoriesList = adminService.getCategoriesList();
+        List<Activity> activitiesList = adminService.getActivitiesList();
         if (request.getAttribute("activitiesList") == null) {
-            List<Activity> userActivitiesList = UserService.getUserActivitiesList(user);
+            List<Activity> userActivitiesList = userService.getUserActivitiesList(user);
             request.setAttribute("activitiesList", userActivitiesList);
         }
-        for (Activity activity : activitiesList) {
-            Time time = UserService.getTimeByActivity(user, activity);
-            if (time != null) {
-                request.setAttribute("timeSpent".concat(activity.getName()), time.toString().substring(0, 5));
-            }
+        for (Activity activity : (List<Activity>) request.getAttribute("activitiesList")) {
+            int minutes = userService.getTimeByActivity(user, activity);
+            int hours = minutes / 60;
+            minutes = minutes % 60;
+            request.setAttribute("hoursSpent".concat(activity.getName()), hours);
+            request.setAttribute("minutesSpent".concat(activity.getName()), minutes);
         }
         request.setAttribute("allActivitiesList", activitiesList);
         request.setAttribute("categoriesList", categoriesList);

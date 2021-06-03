@@ -7,10 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class DeleteUser implements Command {
+    AdminService adminService;
+
+    public DeleteUser(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        AdminService.deleteUser(id);
+        adminService.deleteUser(id);
         return "/app/usersList";
     }
 }

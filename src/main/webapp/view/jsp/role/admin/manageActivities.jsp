@@ -22,8 +22,6 @@
 <div>
     <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message
             key="back" bundle="${bundle}"/></a>
-    <a href="${EnLang}" class="localizationEN">EN</a>
-    <a href="${UkrLang}" class="localizationUA">UKR</a>
 </div>
 <div>
     <br/>
@@ -41,7 +39,7 @@
         <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
     </form>
 </div>
-<form method="get" action="${pageContext.request.contextPath}/app/sortActivities">
+<form method="post" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
     <select required name="sort">
         <option value="name"><fmt:message key="by_name" bundle="${bundle}"/></option>

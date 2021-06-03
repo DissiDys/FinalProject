@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 public class Reg implements Command {
     private final Logger logger = LogManager.getLogger(Reg.class);
 
+    GuestService guestService;
+
+    public Reg(GuestService guestService) {
+        this.guestService = guestService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) {
         String login = request.getParameter("login");
@@ -23,7 +29,7 @@ public class Reg implements Command {
             return Path.REGISTRATION;
         }
         try {
-            GuestService.regNewUser(login, password);
+            guestService.regNewUser(login, password);
         } catch (NotUniqueInsertionException e) {
             logger.info("Not unique login ( login: " + login + " )");
             request.setAttribute("not_unique_login", true);

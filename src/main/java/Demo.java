@@ -10,6 +10,6 @@ import java.sql.Time;
 
 public class Demo {
     public static void main(String[] args) throws NotUniqueInsertionException {
-        System.out.println(Operation.ADD);
+        System.out.println(125 % 60);
     }
 }

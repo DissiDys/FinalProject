@@ -53,16 +53,6 @@ public class JDBCUserDao implements UserDao {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            try {
-                create(user);
-            } catch (NotUniqueInsertionException e) {
-            }
-
-            try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
-                dao.create(activity);
-            } catch (NotUniqueInsertionException e) {
-            }
-
             int i = 1;
 
             pstmt.setLong(i++, user.getId());
@@ -115,8 +105,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public Time getActivitySpentTime(User user, Activity activity) {
-        Time time = null;
+    public int getActivitySpentTime(User user, Activity activity) {
+        int minutes = 0;
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_TIME_SPENT);
@@ -125,18 +115,18 @@ public class JDBCUserDao implements UserDao {
             ResultSet resultSet = pstmt.executeQuery();
 
             if (resultSet.next()) {
-                time = resultSet.getTime("time_spent");
+                minutes = resultSet.getInt("time_spent");
             }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
-        return time;
+        return minutes;
     }
 
     @Override
-    public void setActivitySpentTime(User user, Activity activity, Time time) {
+    public void setActivitySpentTime(User user, Activity activity, int minutes) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.SET_TIME_SPENT)) {
-            pstmt.setString(1, String.valueOf(time));
+            pstmt.setString(1, String.valueOf(minutes));
             pstmt.setString(2, String.valueOf(user.getId()));
             pstmt.setString(3, String.valueOf(activity.getId()));
             pstmt.executeUpdate();

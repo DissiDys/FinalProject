@@ -1,35 +1,35 @@
 package com.example.model.service;
 
+import com.example.model.dao.DaoFactory;
 import com.example.model.dao.UserDao;
-import com.example.model.dao.impl.JDBCDaoFactory;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.model.entity.enums.Operation;
-
-import java.sql.Time;
 import java.util.List;
 
 public class UserService {
-    public static Time getTimeByActivity(User user, Activity activity) {
-        try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()){
+    DaoFactory daoFactory = DaoFactory.getInstance();
+
+    public int getTimeByActivity(User user, Activity activity) {
+        try (UserDao dao = daoFactory.createUserDao()){
             return dao.getActivitySpentTime(user, activity);
         }
     }
 
-    public static void sendRequest(User user, Activity activity, Operation operation) {
-        try(UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
+    public void sendRequest(User user, Activity activity, Operation operation) {
+        try(UserDao dao = daoFactory.createUserDao()) {
             dao.setUnconfirmedActivityForUser(user, activity, operation);
         }
     }
 
-    public static void setSpentTime(User user, Activity activity, Time time) {
-        try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
-            dao.setActivitySpentTime(user, activity, time);
+    public void setSpentTime(User user, Activity activity, int minutes) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            dao.setActivitySpentTime(user, activity, minutes);
         }
     }
 
-    public static List<Activity> getUserActivitiesList(User user) {
-        try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
+    public List<Activity> getUserActivitiesList(User user) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findUsersActivities(user);
         }
     }

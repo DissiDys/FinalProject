@@ -22,8 +22,6 @@
 <div>
     <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message
             key="back" bundle="${bundle}"/></a>
-    <a href="${EnLang}" class="localizationEN">EN</a>
-    <a href="${UkrLang}" class="localizationUA">UKR</a>
 </div>
 <br/>
 <br/>
@@ -32,7 +30,6 @@
     <thead>
     <tr>
         <th><fmt:message key="login" bundle="${bundle}"/></th>
-        <th><fmt:message key="password" bundle="${bundle}"/></th>
         <th></th>
     </tr>
     </thead>
@@ -41,7 +38,6 @@
             <tbody>
             <tr>
                 <td>${user.login}</td>
-                <td>${user.password}</td>
                 <td><a href="${pageContext.request.contextPath}/app/deleteUser?id=${user.id}"><fmt:message key="delete"
                                                                                                            bundle="${bundle}"/></a>
                 </td>
