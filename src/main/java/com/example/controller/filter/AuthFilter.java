@@ -17,11 +17,11 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest)servletRequest;
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         Matcher m = Pattern.compile("(?<=role/)\\w*(?=/)").matcher(req.getRequestURI());
         String role = null;
-        if (m.find()){
+        if (m.find()) {
             role = m.group().toUpperCase(Locale.ROOT);
         }
         User.ROLE enumRole = (User.ROLE) req.getSession().getAttribute("role");

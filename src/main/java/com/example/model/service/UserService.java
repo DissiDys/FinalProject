@@ -5,19 +5,20 @@ import com.example.model.dao.UserDao;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.model.entity.enums.Operation;
+
 import java.util.List;
 
 public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public int getTimeByActivity(User user, Activity activity) {
-        try (UserDao dao = daoFactory.createUserDao()){
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getActivitySpentTime(user, activity);
         }
     }
 
     public void sendRequest(User user, Activity activity, Operation operation) {
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.setUnconfirmedActivityForUser(user, activity, operation);
         }
     }

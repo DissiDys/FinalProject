@@ -18,14 +18,12 @@ public class AdminService {
     public void acceptActivity(User user, Activity activity) {
         try (UserDao dao = daoFactory.createUserDao()) {
             Operation op = getOperationForUserUnconfirmedActivity(user, activity);
-            if (op != null) {
-                String operation = op.toString();
-                dao.deleteUnconfirmedActivityForUser(user, activity);
-                if (operation.equals("ADD")) {
-                    dao.setActivityForUser(user, activity);
-                } else {
-                    dao.deleteActivityForUser(user, activity);
-                }
+            String operation = op.toString();
+            dao.deleteUnconfirmedActivityForUser(user, activity);
+            if (operation.equals("ADD")) {
+                dao.setActivityForUser(user, activity);
+            } else {
+                dao.deleteActivityForUser(user, activity);
             }
         }
     }

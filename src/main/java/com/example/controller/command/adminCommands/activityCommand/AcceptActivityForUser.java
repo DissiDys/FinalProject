@@ -24,12 +24,12 @@ public class AcceptActivityForUser implements Command {
         User user = adminService.getUserByID(user_id);
         Activity activity = adminService.getActivityByID(activity_id);
 
-        if (request.getParameter("accept").equals("true")){
+        if (request.getParameter("accept").equals("true")) {
             adminService.acceptActivity(user, activity);
         } else {
             adminService.dontAcceptActivity(user, activity);
         }
 
-        return "/app/unconfirmedActivitiesList";
+        return "redirect:/app/unconfirmedActivitiesList";
     }
 }

@@ -26,6 +26,6 @@ public class DeleteActivityForUser implements Command {
         Activity activity = adminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
         userService.sendRequest(user, activity, Operation.DELETE);
         request.setAttribute("msg".concat(activity.getName()), true);
-        return "/app/userActivities";
+        return "redirect:/app/userActivities";
     }
 }

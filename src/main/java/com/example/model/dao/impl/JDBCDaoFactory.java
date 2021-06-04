@@ -30,7 +30,7 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCActivityDao(getConnection());
     }
 
-    private Connection getConnection(){
+    private Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {

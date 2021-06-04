@@ -25,7 +25,7 @@ public class AddTime implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
-        if (request.getParameter("time") == null || request.getParameter("time").equals("")){
+        if (request.getParameter("time") == null || request.getParameter("time").equals("")) {
             return "/app/userActivities";
         }
 
@@ -38,6 +38,6 @@ public class AddTime implements Command {
 
         userService.setSpentTime(user, activity, userService.getTimeByActivity(user, activity) + time);
 
-        return "/app/userActivities";
+        return "redirect:/app/userActivities";
     }
 }

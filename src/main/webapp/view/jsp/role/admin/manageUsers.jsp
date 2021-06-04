@@ -4,14 +4,6 @@
 <html>
 <fmt:setLocale value='${pageContext.request.getSession(false).getAttribute("lang")}'/>
 <fmt:setBundle basename="translate" var="bundle"/>
-
-<c:url value="/app/usersList" var="EnLang">
-    <c:param name="lang" value="en"/>
-</c:url>
-
-<c:url value="/app/usersList" var="UkrLang">
-    <c:param name="lang" value="ukr"/>
-</c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
@@ -20,7 +12,7 @@
 </head>
 <body>
 <div>
-    <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message
+    <a href="${pageContext.request.contextPath}/app/adminAccount" class="onMain"><fmt:message
             key="back" bundle="${bundle}"/></a>
 </div>
 <br/>
@@ -37,9 +29,15 @@
         <c:if test="${user.login!='Admin'}">
             <tbody>
             <tr>
-                <td>${user.login}</td>
-                <td><a href="${pageContext.request.contextPath}/app/deleteUser?id=${user.id}"><fmt:message key="delete"
-                                                                                                           bundle="${bundle}"/></a>
+                <td>
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/app/userPageForAdmin">
+                        <button type="submit" name="user_id" value="${user.id}" class="btn-link">${user.login}</button>
+                    </form>
+                </td>
+                <td><a href="${pageContext.request.contextPath}/app/deleteUser?user_id=${user.id}"><fmt:message
+                        key="delete"
+                        bundle="${bundle}"/></a>
                 </td>
             </tr>
             </tbody>

@@ -1,14 +1,12 @@
 package com.example.model.dao.impl;
 
-import com.example.model.dao.ActivityDao;
+import com.example.controller.constants.SQLConstants;
 import com.example.model.dao.UserDao;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.mapper.ActivityMapper;
 import com.example.model.dao.mapper.UserMapper;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
-import com.example.controller.constants.SQLConstants;
-
 import com.example.model.entity.enums.Operation;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -158,7 +156,7 @@ public class JDBCUserDao implements UserDao {
             ResultSet resultSet = pstmt.executeQuery();
 
             ActivityMapper activityMapper = new ActivityMapper();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 activities.add(activityMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
@@ -187,8 +185,8 @@ public class JDBCUserDao implements UserDao {
         ) {
             pstmt.setString(1, String.valueOf(user.getId()));
             ResultSet resultSet = pstmt.executeQuery();
-            while (resultSet.next()){
-                if (resultSet.getLong("activity_id") == activity.getId()){
+            while (resultSet.next()) {
+                if (resultSet.getLong("activity_id") == activity.getId()) {
                     return Operation.valueOf(resultSet.getString("operation"));
                 }
             }

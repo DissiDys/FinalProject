@@ -4,14 +4,6 @@
 <html>
 <fmt:setLocale value='${pageContext.request.getSession(false).getAttribute("lang")}'/>
 <fmt:setBundle basename="translate" var="bundle"/>
-
-<c:url value="/app/userActivities" var="EnLang">
-    <c:param name="lang" value="en"/>
-</c:url>
-
-<c:url value="/app/userActivities" var="UkrLang">
-    <c:param name="lang" value="ukr"/>
-</c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/css/userAccount.css">
@@ -36,11 +28,6 @@
         </select>
         <input type="submit" value="<fmt:message key="add" bundle="${bundle}"/>">
     </form>
-    <label style="color: green">
-        <c:if test="${pageContext.request.getAttribute('msg')}">
-            <fmt:message key="request_to_admin_sended"
-                         bundle="${bundle}"/>
-        </c:if><label/>
 </div>
 <form method="post" action="${pageContext.request.contextPath}/app/sortActivities">
     <label><fmt:message key="sort_by" bundle="${bundle}"/></label>
@@ -50,7 +37,7 @@
     </select>
     <div id="checkboxes">
         <input checked type="checkbox" id="checkAll">
-        <label for="checkAll">Check all</label>
+        <label for="checkAll"><fmt:message key="check_all" bundle="${bundle}"/></label>
         <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
             <input checked type="checkbox" , name="${category.name}">
             <label for="${category.name}">${category.name}</label>
@@ -76,7 +63,7 @@
         <td>${activity.category.name}</td>
         <td>${hours} <fmt:message key="hours" bundle="${bundle}"/> ${minutes} <fmt:message key="minutes"
                                                                                            bundle="${bundle}"/>
-            <form action="${pageContext.request.contextPath}/app/addTime">
+            <form method="post" action="${pageContext.request.contextPath}/app/addTime">
                 <input type="time" name="time">
                 <input type="text" name="activity_id" hidden value="${activity.id}">
                 <input type="submit" value="<fmt:message key="send" bundle="${bundle}"/>">
@@ -88,9 +75,6 @@
 
         </tr>
         </tbody>
-        <c:if test="${pageContext.request.getAttribute('msg'.concat(activity.name))}">
-            <label style="color: green"><fmt:message key="request_to_admin_sended" bundle="${bundle}"/></label>
-        </c:if>
     </c:forEach>
 </table>
 <script type="text/javascript"

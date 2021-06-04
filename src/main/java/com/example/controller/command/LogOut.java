@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class LogOut implements Command{
+public class LogOut implements Command {
     private final Logger logger = LogManager.getLogger(LogOut.class);
 
     @Override

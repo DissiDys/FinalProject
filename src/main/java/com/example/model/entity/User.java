@@ -5,10 +5,6 @@ public class User {
     private String password;
     private long id;
 
-    public enum ROLE {
-        USER, ADMIN, GUEST;
-    }
-
     private User(String login, String password) {
         this.login = login;
         this.password = password;
@@ -16,14 +12,6 @@ public class User {
 
     public static User createUser(String login, String password) {
         return new User(login, password);
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public long getId() {
@@ -38,15 +26,27 @@ public class User {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof User) {
-            return login.equals(((User)obj).login) && password.equals(((User)obj).password);
+            return login.equals(((User) obj).login) && password.equals(((User) obj).password);
         }
         return false;
+    }
+
+    public enum ROLE {
+        USER, ADMIN, GUEST;
     }
 }

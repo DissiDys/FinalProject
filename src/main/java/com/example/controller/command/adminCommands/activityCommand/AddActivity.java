@@ -34,6 +34,6 @@ public class AddActivity implements Command {
         } catch (NotUniqueInsertionException e) {
             logger.error("Those activity already exist, name: " + activity.getName());
         }
-        return "/app/activities";
+        return "redirect:/app/activities";
     }
 }

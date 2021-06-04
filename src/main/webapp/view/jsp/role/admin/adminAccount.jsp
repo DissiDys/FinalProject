@@ -18,24 +18,27 @@
     <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
     <title><fmt:message key="admin_account" bundle="${bundle}"/></title>
 </head>
-    <body>
-        <div>
-            <a href="${pageContext.request.contextPath}/app/logout" class="logout"><fmt:message key="logout" bundle="${bundle}"/></a>
-            <a href="${EnLang}" class="localizationEN">EN</a>
-            <a href="${UkrLang}" class="localizationUA">UKR</a>
-        </div>
+<body>
+<div>
+    <a href="${pageContext.request.contextPath}/app/logout" class="logout"><fmt:message key="logout"
+                                                                                        bundle="${bundle}"/></a>
+    <a href="${EnLang}" class="localizationEN">EN</a>
+    <a href="${UkrLang}" class="localizationUA">UKR</a>
+</div>
 
-        <div>
-            <br/>
-            <br/>
-            <br/>
-            <a href="${pageContext.request.contextPath}/app/usersList"><fmt:message key="manage_users" bundle="${bundle}"/></a>
-            <br/>
-            <a href="${pageContext.request.contextPath}/app/activitiesCategories"><fmt:message key="activities_categories" bundle="${bundle}"/></a>
-            <br/>
-            <a href="${pageContext.request.contextPath}/app/activities"><fmt:message key="activities" bundle="${bundle}"/></a>
-            <br/>
-            <a href="${pageContext.request.contextPath}/app/unconfirmedActivitiesList"><fmt:message key="accept" bundle="${bundle}"/></a>
-        </div>
-    </body>
+<div>
+    <br/>
+    <br/>
+    <br/>
+    <a href="${pageContext.request.contextPath}/app/usersList"><fmt:message key="manage_users" bundle="${bundle}"/></a>
+    <br/>
+    <a href="${pageContext.request.contextPath}/app/activitiesCategories"><fmt:message key="activities_categories"
+                                                                                       bundle="${bundle}"/></a>
+    <br/>
+    <a href="${pageContext.request.contextPath}/app/activities"><fmt:message key="activities" bundle="${bundle}"/></a>
+    <br/>
+    <a href="${pageContext.request.contextPath}/app/unconfirmedActivitiesList"><fmt:message key="accept"
+                                                                                            bundle="${bundle}"/></a>
+</div>
+</body>
 </html>

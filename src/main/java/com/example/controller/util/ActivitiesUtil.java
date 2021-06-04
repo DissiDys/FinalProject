@@ -5,6 +5,7 @@ import com.example.model.entity.Category;
 import com.example.model.entity.User;
 import com.example.model.service.AdminService;
 import com.example.model.service.UserService;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,17 +45,17 @@ public class ActivitiesUtil {
         if (role.name().equals("ADMIN")) {
             activityList = adminService.getActivitiesList();
         }
-        if (role.name().equals("USER")){
+        if (role.name().equals("USER")) {
             User user = (User) request.getSession().getAttribute("user");
             activityList = userService.getUserActivitiesList(user);
         }
 
         for (Category category : adminService.getCategoriesList()) {
-           if (request.getParameter(category.getName()) == null){
-               activityList = activityList.stream()
-                       .filter(activity -> !activity.getCategory().getName().equals(category.getName()))
-                       .collect(Collectors.toList());
-           }
+            if (request.getParameter(category.getName()) == null) {
+                activityList = activityList.stream()
+                        .filter(activity -> !activity.getCategory().getName().equals(category.getName()))
+                        .collect(Collectors.toList());
+            }
         }
 
         request.setAttribute("activitiesList", activityList);

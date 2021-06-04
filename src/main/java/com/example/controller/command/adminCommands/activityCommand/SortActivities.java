@@ -18,8 +18,8 @@ public class SortActivities implements Command {
         activitiesUtil.filter(request);
         activitiesUtil.sort(request);
         if (role.name().equals("ADMIN")) {
-            return "/app/activities";
+            return "redirect:/app/activities";
         }
-        return "/app/userActivities";
+        return "redirect:/app/userActivities";
     }
 }

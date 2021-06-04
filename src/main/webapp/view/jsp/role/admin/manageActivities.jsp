@@ -4,14 +4,6 @@
 <html>
 <fmt:setLocale value='${pageContext.request.getSession(false).getAttribute("lang")}'/>
 <fmt:setBundle basename="translate" var="bundle"/>
-
-<c:url value="/app/activities" var="EnLang">
-    <c:param name="lang" value="en"/>
-</c:url>
-
-<c:url value="/app/activities" var="UkrLang">
-    <c:param name="lang" value="ukr"/>
-</c:url>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" href="https://img.icons8.com/ios/452/clock--v1.png" type="image/png">
@@ -20,7 +12,7 @@
 </head>
 <body>
 <div>
-    <a href="${pageContext.request.contextPath}/view/jsp/role/admin/adminAccount.jsp" class="onMain"><fmt:message
+    <a href="${pageContext.request.contextPath}/app/adminAccount" class="onMain"><fmt:message
             key="back" bundle="${bundle}"/></a>
 </div>
 <div>
@@ -48,7 +40,7 @@
     </select>
     <div id="checkboxes">
         <input checked type="checkbox" id="checkAll">
-        <label for="checkAll">Check all</label>
+        <label for="checkAll"><fmt:message key="check_all" bundle="${bundle}"/></label>
         <c:forEach items="${pageContext.request.getAttribute('categoriesList')}" var="category" varStatus="status">
             <input checked type="checkbox" , name="${category.name}">
             <label for="${category.name}">${category.name}</label>

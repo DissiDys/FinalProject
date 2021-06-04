@@ -29,6 +29,6 @@ public class AddActivityForUser implements Command {
         Activity activity = adminService.getActivityByID(Integer.parseInt(request.getParameter("activity_id")));
         userService.sendRequest(user, activity, Operation.ADD);
         request.setAttribute("msg", true);
-        return "/app/userActivities";
+        return "redirect:/app/userActivities";
     }
 }

@@ -27,6 +27,6 @@ public class AddCategory implements Command {
             System.out.println(e.getMessage());
         }
 
-        return "/app/activitiesCategories";
+        return "redirect:/app/activitiesCategories";
     }
 }

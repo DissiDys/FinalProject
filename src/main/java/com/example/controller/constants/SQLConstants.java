@@ -12,7 +12,7 @@ public class SQLConstants {
     public static final String DELETE_CATEGORY_BY_ID = "DELETE FROM category WHERE id = (?);";
 
     public static final String ADD_NEW_ACTIVITY = "INSERT INTO activity (name, category_id) VALUES (?, ?);";
-    public static final String FIND_ALL_ACTIVITIES= "SELECT * FROM activity INNER JOIN category ON activity.category_id = category.id;";
+    public static final String FIND_ALL_ACTIVITIES = "SELECT * FROM activity INNER JOIN category ON activity.category_id = category.id;";
     public static final String DELETE_ACTIVITY_BY_ID = "DELETE FROM activity WHERE id = (?);";
 
     public static final String SET_ACTIVITY_FOR_USER = "INSERT INTO user_has_activity (user_id, activity_id) VALUES (?, ?);";
@@ -25,8 +25,8 @@ public class SQLConstants {
     public static final String SET_UNCONFIRMED_ACTIVITY_FOR_USER = "INSERT INTO unconfirmed_activities (user_id, activity_id, operation) VALUES (?, ?, ?);";
     public static final String FIND_UNCONFIRMED_ACTIVITIES_FOR_USER =
             "SELECT * FROM unconfirmed_activities INNER JOIN activity ON activity.id = unconfirmed_activities.activity_id \n" +
-            "INNER JOIN category ON category_id = category.id\n" +
-            "WHERE user_id = ?;";
+                    "INNER JOIN category ON category_id = category.id\n" +
+                    "WHERE user_id = ?;";
     public static final String DELETE_UNCONFIRMED_ACTIVITY_FOR_USER = "DELETE FROM unconfirmed_activities WHERE user_id = (?) AND activity_id = (?);";
     public static final String DELETE_ACTIVITY_FOR_USER = "DELETE FROM user_has_activity WHERE user_id = (?) AND activity_id = (?);";
 }

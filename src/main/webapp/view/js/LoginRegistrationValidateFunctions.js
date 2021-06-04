@@ -1,6 +1,7 @@
 function check() {
     document.getElementById("confirm_password").setAttribute("pattern", document.getElementById("password").value);
 }
-function clearErrorMsg(){
+
+function clearErrorMsg() {
     document.getElementById('errorMsg').innerText = "";
 }

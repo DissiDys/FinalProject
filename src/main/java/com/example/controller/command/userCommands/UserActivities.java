@@ -1,6 +1,7 @@
 package com.example.controller.command.userCommands;
 
 import com.example.controller.command.Command;
+import com.example.controller.constants.Path;
 import com.example.model.entity.Activity;
 import com.example.model.entity.Category;
 import com.example.model.entity.User;
@@ -39,6 +40,6 @@ public class UserActivities implements Command {
         }
         request.setAttribute("allActivitiesList", activitiesList);
         request.setAttribute("categoriesList", categoriesList);
-        return "/view/jsp/role/user/userAccount.jsp";
+        return Path.USER_PAGE;
     }
 }
