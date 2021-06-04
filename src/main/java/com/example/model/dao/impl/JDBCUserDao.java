@@ -6,6 +6,7 @@ import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.mapper.ActivityMapper;
 import com.example.model.dao.mapper.UserMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.Category;
 import com.example.model.entity.User;
 import com.example.model.entity.enums.Operation;
 import org.apache.log4j.LogManager;
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCUserDao implements UserDao {
     private final Logger logger = LogManager.getLogger(JDBCUserDao.class);
@@ -178,7 +180,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public Operation getOperationForUserUnconfirmedActivity(User user, Activity activity) {
+    public Optional<Operation> getOperationForUserUnconfirmedActivity(User user, Activity activity) {
         try (
                 PreparedStatement pstmt = connection.prepareStatement(SQLConstants.FIND_UNCONFIRMED_ACTIVITIES_FOR_USER);
 
@@ -187,23 +189,23 @@ public class JDBCUserDao implements UserDao {
             ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 if (resultSet.getLong("activity_id") == activity.getId()) {
-                    return Operation.valueOf(resultSet.getString("operation"));
+                    return Optional.of(Operation.valueOf(resultSet.getString("operation")));
                 }
             }
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
-        return null;
+        return Optional.empty();
     }
 
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         for (User u : findAll()) {
-            if (u.getId() == id) return u;
+            if (u.getId() == id) return Optional.of(u);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -232,10 +234,13 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void delete(int id) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_USER_BY_ID)) {
-            String login = findById(id).getLogin();
-            pstmt.setString(1, String.valueOf(id));
-            pstmt.executeUpdate();
-            logger.info("User with login: " + login + " was deleted");
+            Optional<User> optional = findById(id);
+            if (optional.isPresent()) {
+                String login = findById(id).get().getLogin();
+                pstmt.setString(1, String.valueOf(id));
+                pstmt.executeUpdate();
+                logger.info("User with login: " + login + " was deleted");
+            }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }

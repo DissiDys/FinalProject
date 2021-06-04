@@ -5,12 +5,14 @@ import com.example.model.dao.CategoryDao;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.mapper.CategoryMapper;
 import com.example.model.entity.Category;
+import com.example.model.entity.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCCategoryDao implements CategoryDao {
     private final Logger logger = LogManager.getLogger(JDBCCategoryDao.class);
@@ -40,11 +42,11 @@ public class JDBCCategoryDao implements CategoryDao {
     }
 
     @Override
-    public Category findById(int id) {
+    public Optional<Category> findById(int id) {
         for (Category c : findAll()) {
-            if (c.getId() == id) return c;
+            if (c.getId() == id) return Optional.of(c);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -73,10 +75,13 @@ public class JDBCCategoryDao implements CategoryDao {
     @Override
     public void delete(int id) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_CATEGORY_BY_ID)) {
-            String name = findById(id).getName();
-            pstmt.setString(1, String.valueOf(id));
-            pstmt.executeUpdate();
-            logger.info("Category with name: " + name + " was deleted");
+            Optional<Category> optional = findById(id);
+            if (optional.isPresent()) {
+                String name = findById(id).get().getName();
+                pstmt.setString(1, String.valueOf(id));
+                pstmt.executeUpdate();
+                logger.info("Category with name: " + name + " was deleted");
+            }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }

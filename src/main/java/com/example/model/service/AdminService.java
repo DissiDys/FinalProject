@@ -11,19 +11,23 @@ import com.example.model.entity.User;
 import com.example.model.entity.enums.Operation;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AdminService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public void acceptActivity(User user, Activity activity) {
         try (UserDao dao = daoFactory.createUserDao()) {
-            Operation op = getOperationForUserUnconfirmedActivity(user, activity);
-            String operation = op.toString();
-            dao.deleteUnconfirmedActivityForUser(user, activity);
-            if (operation.equals("ADD")) {
-                dao.setActivityForUser(user, activity);
-            } else {
-                dao.deleteActivityForUser(user, activity);
+            Optional<Operation> optional = getOperationForUserUnconfirmedActivity(user, activity);
+            if (optional.isPresent()) {
+                Operation op = optional.get();
+                String operation = op.toString();
+                dao.deleteUnconfirmedActivityForUser(user, activity);
+                if (operation.equals("ADD")) {
+                    dao.setActivityForUser(user, activity);
+                } else {
+                    dao.deleteActivityForUser(user, activity);
+                }
             }
         }
     }
@@ -42,7 +46,7 @@ public class AdminService {
 
     public Activity getActivityByID(int id) {
         try (ActivityDao dao = daoFactory.createActivityDao()) {
-            return dao.findById(id);
+            return dao.findById(id).orElse(null);
         }
     }
 
@@ -54,7 +58,7 @@ public class AdminService {
 
     public Category findCategoryById(int id) {
         try (CategoryDao dao = daoFactory.createCategoryDao()) {
-            return dao.findById(id);
+            return dao.findById(id).orElse(null);
         }
     }
 
@@ -103,11 +107,11 @@ public class AdminService {
 
     public User getUserByID(int id) {
         try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findById(id);
+            return dao.findById(id).orElse(null);
         }
     }
 
-    public Operation getOperationForUserUnconfirmedActivity(User user, Activity activity) {
+    public Optional<Operation> getOperationForUserUnconfirmedActivity(User user, Activity activity) {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getOperationForUserUnconfirmedActivity(user, activity);
         }

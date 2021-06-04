@@ -5,12 +5,14 @@ import com.example.model.dao.ActivityDao;
 import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.dao.mapper.ActivityMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.Category;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCActivityDao implements ActivityDao {
     private final Logger logger = LogManager.getLogger(JDBCUserDao.class);
@@ -51,11 +53,11 @@ public class JDBCActivityDao implements ActivityDao {
     }
 
     @Override
-    public Activity findById(int id) {
+    public Optional<Activity> findById(int id) {
         for (Activity a : findAll()) {
-            if (a.getId() == id) return a;
+            if (a.getId() == id) return Optional.of(a);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -86,10 +88,13 @@ public class JDBCActivityDao implements ActivityDao {
     @Override
     public void delete(int id) {
         try (PreparedStatement pstmt = connection.prepareStatement(SQLConstants.DELETE_ACTIVITY_BY_ID)) {
-            String name = findById(id).getName();
-            pstmt.setString(1, String.valueOf(id));
-            pstmt.executeUpdate();
-            logger.info("Activity with name: " + name + " was deleted");
+            Optional<Activity> optional = findById(id);
+            if (optional.isPresent()) {
+                String name = findById(id).get().getName();
+                pstmt.setString(1, String.valueOf(id));
+                pstmt.executeUpdate();
+                logger.info("Activity with name: " + name + " was deleted");
+            }
         } catch (SQLException ex) {
             logger.error(ex.getMessage(), ex);
         }
