@@ -8,8 +8,9 @@ public abstract class DaoFactory {
     public static DaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {
-                daoFactory = new JDBCDaoFactory();
-
+                if (daoFactory == null) {
+                    daoFactory = new JDBCDaoFactory();
+                }
             }
         }
         return daoFactory;

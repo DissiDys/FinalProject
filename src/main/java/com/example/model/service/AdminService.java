@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class AdminService {
     DaoFactory daoFactory = DaoFactory.getInstance();
+    UserService userService = new UserService();
 
     public void acceptActivity(User user, Activity activity) {
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -120,7 +121,7 @@ public class AdminService {
     public int getAmountOfUsersOnActivity(Activity activity) {
         int amountOfUsers = 0;
         for (User user : getUsersList()) {
-            for (Activity userActivity : new UserService().getUserActivitiesList(user)) {
+            for (Activity userActivity : userService.getUserActivitiesList(user)) {
                 if (userActivity.getName().equals(activity.getName())) {
                     amountOfUsers++;
                 }

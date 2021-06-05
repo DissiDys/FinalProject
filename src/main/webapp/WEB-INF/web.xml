@@ -47,4 +47,11 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>customTags</taglib-uri>
+            <taglib-location>/WEB-INF/custom-tags.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>
