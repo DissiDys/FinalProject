@@ -1,8 +1,10 @@
 import com.example.model.dao.exception.NotUniqueInsertionException;
+import com.example.model.entity.User;
 
 
 public class Demo {
     public static void main(String[] args) throws NotUniqueInsertionException {
-        System.out.println(125 % 60);
+        User user = User.createUser("login", "password");
+        System.out.println(user);
     }
 }

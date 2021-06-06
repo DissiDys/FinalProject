@@ -39,6 +39,14 @@ public class User {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof User) {
             return login.equals(((User) obj).login) && password.equals(((User) obj).password);

@@ -13,24 +13,25 @@ import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
     private final Logger logger = LogManager.getLogger(JDBCDaoFactory.class);
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
+    private DataSource dataSource;
 
     @Override
-    public UserDao createUserDao() {
-        return new JDBCUserDao(getConnection());
+    public UserDao createUserDao(String dbName) {
+        return new JDBCUserDao(getConnection(dbName));
     }
 
     @Override
-    public CategoryDao createCategoryDao() {
-        return new JDBCCategoryDao(getConnection());
+    public CategoryDao createCategoryDao(String dbName) {
+        return new JDBCCategoryDao(getConnection(dbName));
     }
 
     @Override
-    public ActivityDao createActivityDao() {
-        return new JDBCActivityDao(getConnection());
+    public ActivityDao createActivityDao(String dbName) {
+        return new JDBCActivityDao(getConnection(dbName));
     }
 
-    private Connection getConnection() {
+    private Connection getConnection(String dbName) {
+        dataSource = ConnectionPoolHolder.getDataSource(dbName);
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {

@@ -9,7 +9,7 @@ public class GuestService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public boolean DBContainsUser(User user) {
-        UserDao dao = daoFactory.createUserDao();
+        UserDao dao = daoFactory.createUserDao("mydb");
         for (User u : dao.findAll()) {
             if (user.getLogin().equals(u.getLogin()) && user.getPassword().equals(u.getPassword())) {
                 user.setId(u.getId());
@@ -22,7 +22,7 @@ public class GuestService {
     }
 
     public boolean regNewUser(String login, String password) throws NotUniqueInsertionException {
-        try (UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao("mydb")) {
             return dao.create(User.createUser(login, password));
         }
     }

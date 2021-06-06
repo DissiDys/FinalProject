@@ -226,10 +226,6 @@ public class JDBCUserDao implements UserDao {
         return users;
     }
 
-    @Override
-    public void update(User entity) {
-
-    }
 
     @Override
     public void delete(int id) {

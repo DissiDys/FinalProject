@@ -7,12 +7,12 @@ import javax.sql.DataSource;
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
 
-    public static DataSource getDataSource() {
+    public static DataSource getDataSource(String dbName) {
 
         if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 BasicDataSource ds = new BasicDataSource();
-                ds.setUrl("jdbc:mysql://localhost:3306/mydb");
+                ds.setUrl("jdbc:mysql://localhost:3306/" + dbName);
                 ds.setUsername("root");
                 ds.setPassword("Idalog71_7");
                 ds.setMinIdle(5);

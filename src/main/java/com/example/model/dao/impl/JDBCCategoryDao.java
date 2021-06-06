@@ -67,10 +67,6 @@ public class JDBCCategoryDao implements CategoryDao {
         return categories;
     }
 
-    @Override
-    public void update(Category entity) {
-
-    }
 
     @Override
     public void delete(int id) {
