@@ -30,7 +30,7 @@ public class JDBCActivityDao implements ActivityDao {
             pstmt.setString(i++, activity.getName());
             if (activity.getCategory() != null) {
                 try {
-                    JDBCDaoFactory.getInstance().createCategoryDao("mydb").create(activity.getCategory());
+                    JDBCDaoFactory.getInstance("db").createCategoryDao().create(activity.getCategory());
                 } catch (NotUniqueInsertionException e) {
                     logger.debug("Created activity with already existed category, activity.name: " + activity.getName());
                 }

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CategoryDaoImplTest {
-    static DaoFactory daoFactory = DaoFactory.getInstance();
+    static DaoFactory daoFactory = DaoFactory.getInstance("dbTest");
 
     static CategoryDao categoryDao;
 
@@ -31,7 +31,7 @@ public class CategoryDaoImplTest {
 
     @BeforeEach
     void dropDB() throws SQLException, FileNotFoundException {
-        categoryDao = daoFactory.createCategoryDao("timetracktest");
+        categoryDao = daoFactory.createCategoryDao();
 
         Connection con = ConnectionPoolHolder.getDataSource("timetracktest").getConnection();
         ScriptRunner scriptRunner = new ScriptRunner(con);

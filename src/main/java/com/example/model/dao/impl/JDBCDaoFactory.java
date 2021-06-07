@@ -16,22 +16,22 @@ public class JDBCDaoFactory extends DaoFactory {
     private DataSource dataSource;
 
     @Override
-    public UserDao createUserDao(String dbName) {
-        return new JDBCUserDao(getConnection(dbName));
+    public UserDao createUserDao() {
+        return new JDBCUserDao(getConnection());
     }
 
     @Override
-    public CategoryDao createCategoryDao(String dbName) {
-        return new JDBCCategoryDao(getConnection(dbName));
+    public CategoryDao createCategoryDao() {
+        return new JDBCCategoryDao(getConnection());
     }
 
     @Override
-    public ActivityDao createActivityDao(String dbName) {
-        return new JDBCActivityDao(getConnection(dbName));
+    public ActivityDao createActivityDao() {
+        return new JDBCActivityDao(getConnection());
     }
 
-    private Connection getConnection(String dbName) {
-        dataSource = ConnectionPoolHolder.getDataSource(dbName);
+    private Connection getConnection() {
+        dataSource = ConnectionPoolHolder.getDataSource(dbResourceName);
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {

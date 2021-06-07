@@ -6,10 +6,10 @@ import com.example.model.dao.exception.NotUniqueInsertionException;
 import com.example.model.entity.User;
 
 public class GuestService {
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    DaoFactory daoFactory = DaoFactory.getInstance("db");
 
     public boolean DBContainsUser(User user) {
-        UserDao dao = daoFactory.createUserDao("mydb");
+        UserDao dao = daoFactory.createUserDao();
         for (User u : dao.findAll()) {
             if (user.getLogin().equals(u.getLogin()) && user.getPassword().equals(u.getPassword())) {
                 user.setId(u.getId());
@@ -22,7 +22,7 @@ public class GuestService {
     }
 
     public boolean regNewUser(String login, String password) throws NotUniqueInsertionException {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.create(User.createUser(login, password));
         }
     }

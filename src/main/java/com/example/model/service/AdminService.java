@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdminService {
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    DaoFactory daoFactory = DaoFactory.getInstance("db");
     UserService userService = new UserService();
 
     public void acceptActivity(User user, Activity activity) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             Optional<Operation> optional = getOperationForUserUnconfirmedActivity(user, activity);
             if (optional.isPresent()) {
                 Operation op = optional.get();
@@ -34,86 +34,86 @@ public class AdminService {
     }
 
     public void dontAcceptActivity(User user, Activity activity) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.deleteUnconfirmedActivityForUser(user, activity);
         }
     }
 
     public List<Activity> getActivitiesList() {
-        try (ActivityDao dao = daoFactory.createActivityDao("mydb")) {
+        try (ActivityDao dao = daoFactory.createActivityDao()) {
             return dao.findAll();
         }
     }
 
     public Activity getActivityByID(int id) {
-        try (ActivityDao dao = daoFactory.createActivityDao("mydb")) {
+        try (ActivityDao dao = daoFactory.createActivityDao()) {
             return dao.findById(id).orElse(null);
         }
     }
 
     public void addActivity(Activity activity) throws NotUniqueInsertionException {
-        try (ActivityDao dao = daoFactory.createActivityDao("mydb")) {
+        try (ActivityDao dao = daoFactory.createActivityDao()) {
             dao.create(activity);
         }
     }
 
     public Category findCategoryById(int id) {
-        try (CategoryDao dao = daoFactory.createCategoryDao("mydb")) {
+        try (CategoryDao dao = daoFactory.createCategoryDao()) {
             return dao.findById(id).orElse(null);
         }
     }
 
     public void dontAcceptActivity(int id) {
-        try (ActivityDao dao = daoFactory.createActivityDao("mydb")) {
+        try (ActivityDao dao = daoFactory.createActivityDao()) {
             dao.delete(id);
         }
     }
 
     public List<Activity> getUnconfirmedActivitiesForUser(User user) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getUnconfirmedActivitiesForUser(user);
         }
     }
 
     public void addCategory(String name) throws NotUniqueInsertionException {
         Category category = Category.createCategory(name);
-        try (CategoryDao dao = daoFactory.createCategoryDao("mydb")) {
+        try (CategoryDao dao = daoFactory.createCategoryDao()) {
             dao.create(category);
         }
     }
 
     public List<Category> getCategoriesList() {
-        try (CategoryDao dao = daoFactory.createCategoryDao("mydb")) {
+        try (CategoryDao dao = daoFactory.createCategoryDao()) {
             return dao.findAll();
         }
     }
 
     public void deleteCategory(int id) {
-        try (CategoryDao dao = daoFactory.createCategoryDao("mydb")) {
+        try (CategoryDao dao = daoFactory.createCategoryDao()) {
             dao.delete(id);
         }
     }
 
     public void deleteUser(int id) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.delete(id);
         }
     }
 
     public List<User> getUsersList() {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findAll();
         }
     }
 
     public User getUserByID(int id) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findById(id).orElse(null);
         }
     }
 
     public Optional<Operation> getOperationForUserUnconfirmedActivity(User user, Activity activity) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getOperationForUserUnconfirmedActivity(user, activity);
         }
     }

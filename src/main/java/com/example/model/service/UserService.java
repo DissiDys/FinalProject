@@ -9,28 +9,28 @@ import com.example.model.entity.enums.Operation;
 import java.util.List;
 
 public class UserService {
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    DaoFactory daoFactory = DaoFactory.getInstance("db");
 
     public int getTimeByActivity(User user, Activity activity) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getActivitySpentTime(user, activity);
         }
     }
 
     public void sendRequest(User user, Activity activity, Operation operation) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.setUnconfirmedActivityForUser(user, activity, operation);
         }
     }
 
     public void setSpentTime(User user, Activity activity, int minutes) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.setActivitySpentTime(user, activity, minutes);
         }
     }
 
     public List<Activity> getUserActivitiesList(User user) {
-        try (UserDao dao = daoFactory.createUserDao("mydb")) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findUsersActivities(user);
         }
     }

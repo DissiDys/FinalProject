@@ -13,21 +13,24 @@ import java.sql.Statement;
 public abstract class DaoFactory {
     private static DaoFactory daoFactory;
     private static final Logger logger = LogManager.getLogger(DaoFactory.class);
+    protected String dbResourceName = "db";
 
-    public static DaoFactory getInstance() {
+    public static DaoFactory getInstance(String dbResourceName) {
+
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {
                 if (daoFactory == null) {
                     daoFactory = new JDBCDaoFactory();
+                    daoFactory.dbResourceName = dbResourceName;
                 }
             }
         }
         return daoFactory;
     }
 
-    public abstract UserDao createUserDao(String dbName);
+    public abstract UserDao createUserDao();
 
-    public abstract CategoryDao createCategoryDao(String dbName);
+    public abstract CategoryDao createCategoryDao();
 
-    public abstract ActivityDao createActivityDao(String dbName);
+    public abstract ActivityDao createActivityDao();
 }

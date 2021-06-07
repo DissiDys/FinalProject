@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserDaoImplTest {
-    static DaoFactory daoFactory = DaoFactory.getInstance();
+    static DaoFactory daoFactory = DaoFactory.getInstance("dbTest");
 
     static UserDao userDao;
     static CategoryDao categoryDao;
@@ -37,9 +37,9 @@ public class UserDaoImplTest {
 
     @BeforeEach
     void dropDB() throws SQLException, FileNotFoundException {
-        userDao = daoFactory.createUserDao("timetracktest");
-        categoryDao = daoFactory.createCategoryDao("timetracktest");
-        activityDao = daoFactory.createActivityDao("timetracktest");
+        userDao = daoFactory.createUserDao();
+        categoryDao = daoFactory.createCategoryDao();
+        activityDao = daoFactory.createActivityDao();
 
         Connection con = ConnectionPoolHolder.getDataSource("timetracktest").getConnection();
         ScriptRunner scriptRunner = new ScriptRunner(con);
